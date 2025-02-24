@@ -6,35 +6,35 @@
 #    By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/04 12:15:45 by tkeil             #+#    #+#              #
-#    Updated: 2025/02/05 13:10:42 by tkeil            ###   ########.fr        #
+#    Updated: 2025/02/24 19:48:36 by tkeil            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
 
 CXX = c++  
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 NAME = phonebook
+OBJSDIR = objs/
 
 SRCS = main.cpp contact.cpp phonebook.cpp
-OBJS = $(SRCS:.cpp=.o)
+OBJS = $(SRCS:%.cpp=$(OBJSDIR)%.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CXX) $(CXXFLAGS) $(OBJS) $(INCLUDES) -o $(NAME)
+	$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
 
-%.o: %.cpp
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
+$(OBJSDIR):
+	mkdir -p $(OBJSDIR)
+
+$(OBJSDIR)%.o: %.cpp $(OBJSDIR)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	rm -rf $(OBJS)
+	rm -rf $(OBJSDIR)
 
 fclean: clean
 	rm -rf $(NAME)
 
 re: fclean all
-
-test:
-	echo $(OBJS)
 
 .PHONY: all clean fclean re
