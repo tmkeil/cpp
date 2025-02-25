@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:07:02 by tkeil             #+#    #+#             */
-/*   Updated: 2025/02/24 19:49:46 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/02/25 13:04:13 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ void	ft_search_contact(PhoneBook &phonebook)
 
 int	main(void)
 {
+	std::cout << time(NULL) << std::endl;
+	
 	PhoneBook	phonebook;
 
 	std::string command;

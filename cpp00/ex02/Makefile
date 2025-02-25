@@ -6,13 +6,13 @@
 #    By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/18 12:09:20 by tkeil             #+#    #+#              #
-#    Updated: 2025/02/24 20:29:11 by tkeil            ###   ########.fr        #
+#    Updated: 2025/02/25 13:58:46 by tkeil            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CXX = c++  
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
-NAME =  abc
+NAME =  account
 OBJSDIR = objs/
 
 SRCS = Account.cpp tests.cpp

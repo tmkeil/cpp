@@ -6,7 +6,7 @@
 #    By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/04 00:45:16 by tkeil             #+#    #+#              #
-#    Updated: 2025/02/24 20:16:24 by tkeil            ###   ########.fr        #
+#    Updated: 2025/02/25 14:00:44 by tkeil            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,12 +21,10 @@ OBJS = $(SRCS:%.cpp=$(OBJSDIR)%.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CXX) $(CXXFLAGS) $(OBJS) $(INCLUDES) -o $(NAME)
+	$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
 
-$(OBJSDIR):
-	mkdir -p $(OBJSDIR)
-
-$(OBJSDIR)%.o: %.cpp $(OBJSDIR)
+$(OBJSDIR)%.o: %.cpp
+	@mkdir -p $(OBJSDIR)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
@@ -36,5 +34,8 @@ fclean: clean
 	rm -rf $(NAME)
 
 re: fclean all
+
+test:
+	echo $(OBJS)
 
 .PHONY: all clean fclean re

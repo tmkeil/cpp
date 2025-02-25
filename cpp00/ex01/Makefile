@@ -6,7 +6,7 @@
 #    By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/04 12:15:45 by tkeil             #+#    #+#              #
-#    Updated: 2025/02/24 19:48:36 by tkeil            ###   ########.fr        #
+#    Updated: 2025/02/25 14:00:34 by tkeil            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,10 +23,8 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
 
-$(OBJSDIR):
-	mkdir -p $(OBJSDIR)
-
-$(OBJSDIR)%.o: %.cpp $(OBJSDIR)
+$(OBJSDIR)%.o: %.cpp
+	@mkdir -p $(OBJSDIR)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
@@ -36,5 +34,8 @@ fclean: clean
 	rm -rf $(NAME)
 
 re: fclean all
+
+test:
+	echo $(OBJS)
 
 .PHONY: all clean fclean re
