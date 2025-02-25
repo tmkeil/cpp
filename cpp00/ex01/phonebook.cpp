@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:08:21 by tkeil             #+#    #+#             */
-/*   Updated: 2025/02/24 20:50:17 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/02/25 21:53:43 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ void PhoneBook::addContact(std::string data[5])
 
 void PhoneBook::printContact(size_t i)
 {
-	if (i < 0 || i >= 8 || i >= count)
+	if (i >= 8 || i >= count)
 	{
-		std::cout << RED BOLD "Invalid index!" RESET << std::endl;
+		std::cout << RED BOLD "invalid index!" RESET << std::endl;
 		return ;
 	}
 	std::cout << BOLD "First name: " RESET << contacts[i].getFirstName() << std::endl;
@@ -51,8 +51,10 @@ void PhoneBook::printContact(size_t i)
 	std::cout << std::string(2, '\n');
 }
 
-void PhoneBook::printContacts(PhoneBook phonebook)
+void PhoneBook::printContacts(PhoneBook& phonebook)
 {
+	size_t	count;
+
 	std::cout << "|" << std::string(43, '-') << "|" << std::endl;
 	std::cout << "|" << BLUE "     Index" RESET << "|";
 	std::cout << BLUE "First Name" RESET << "|";
@@ -60,7 +62,8 @@ void PhoneBook::printContacts(PhoneBook phonebook)
 	std::cout << BLUE "  Nickname" RESET << "|";
 	std::cout << std::endl;
 	std::cout << "|" << std::string(43, '-') << "|" << std::endl;
-	for (size_t i = 0; i < phonebook.getCount(); i++)
+	count = phonebook.getCount() > 8 ? 8 : phonebook.getCount();
+	for (size_t i = 0; i < count; i++)
 	{
 		std::cout << "|" << std::setw(10) << i << "|";
 		std::cout << std::setw(10) << strFit(contacts[i].getFirstName()) << "|";

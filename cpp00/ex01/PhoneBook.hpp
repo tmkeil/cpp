@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 17:34:05 by tkeil             #+#    #+#             */
-/*   Updated: 2025/02/24 20:49:59 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/02/25 21:48:49 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ class PhoneBook
 	~PhoneBook();
 	size_t getCount(void) const;
 	void printContact(size_t i);
-	void printContacts(PhoneBook phonebook);
+	void printContacts(PhoneBook& phonebook);
 	void addContact(std::string data[5]);
 };
 
