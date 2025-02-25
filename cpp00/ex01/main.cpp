@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:07:02 by tkeil             #+#    #+#             */
-/*   Updated: 2025/02/25 21:56:52 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/02/25 22:29:24 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,22 +66,28 @@ void ft_add_contact(PhoneBook &phonebook) {
   std::cout << RESET;
 }
 
-int	is_valid_index(PhoneBook &phonebook, std::string input, size_t& index)
-{
-	for (size_t i = 0; i < input.size(); i++)
+int is_valid_index(PhoneBook &phonebook, const std::string &input,
+                   size_t &index) {
+					
+  for (size_t i = 0; i < input.size(); i++)
+  {
+	if (!isdigit(input[i]))
 	{
-		if (!isdigit(input[i]))
-			return (0);
-	}
-	index = std::stoi(input);
-	if (index >= phonebook.getCount() || index >=8)
 		return (0);
-	return (1);
+	}
+  }
+  index = std::stoul(input);
+  if (index > std::numeric_limits<size_t>::max())
+  {
+	return (0);
+  }
+  if (index >= phonebook.getCount() || index >= 8)
+    return (0);
+  return (1);
 }
 
 void ft_search_contact(PhoneBook &phonebook) {
-  size_t 	index;
-  bool		val;
+  size_t index;
 
   std::string input;
   if (phonebook.getCount() == 0) {
@@ -90,21 +96,10 @@ void ft_search_contact(PhoneBook &phonebook) {
     return;
   }
   phonebook.printContacts(phonebook);
-  val = true;
-  while (val)
-  {
-	val = false;
-    std::cout << BOLD "Enter index: " RESET << std::flush;
+  do {
+    std::cout << "Enter index: ";
     std::getline(std::cin, input);
-    if (std::cin.fail())
-      exit(1);
-    std::cout << std::endl;
-	if (!is_valid_index(phonebook, input, index))
-	{
-		std::cout << YELLOW "invalid index" RESET << std::endl;
-		val = true;
-	}
-  }
+  } while (!is_valid_index(phonebook, input, index));
   phonebook.printContact(index);
 }
 
