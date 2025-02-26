@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 17:34:05 by tkeil             #+#    #+#             */
-/*   Updated: 2025/02/25 21:48:49 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/02/26 12:56:43 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include <limits>
 # include <sstream>
 # include <string>
+# include <cstdlib>
 
 class PhoneBook
 {

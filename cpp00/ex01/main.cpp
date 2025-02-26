@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:07:02 by tkeil             #+#    #+#             */
-/*   Updated: 2025/02/25 22:29:24 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/02/26 13:20:24 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,26 +63,39 @@ void ft_add_contact(PhoneBook &phonebook) {
   phonebook.addContact(data);
   std::cout << CYAN BOLD << "Contact added:" RESET << std::string(1, '\n');
   phonebook.printContact(index);
-  std::cout << RESET;
+}
+
+int check_number_size(const std::string &input, size_t &index) {
+  unsigned long long nbr;
+
+  std::stringstream ss;
+  ss.str(input);
+  ss >> nbr;
+  if (ss.fail() || nbr > std::numeric_limits<size_t>::max())
+    return (0);
+  index = static_cast<size_t>(nbr);
+  return (1);
 }
 
 int is_valid_index(PhoneBook &phonebook, const std::string &input,
                    size_t &index) {
-					
-  for (size_t i = 0; i < input.size(); i++)
-  {
-	if (!isdigit(input[i]))
-	{
-		return (0);
-	}
+
+  for (size_t i = 0; i < input.size(); i++) {
+    if (!isdigit(input[i])) {
+      std::cout << YELLOW BOLD "Error: Only digits allowed!" RESET << std::endl;
+      return (0);
+    }
   }
-  index = std::stoul(input);
-  if (index > std::numeric_limits<size_t>::max())
-  {
-	return (0);
-  }
-  if (index >= phonebook.getCount() || index >= 8)
+  if (!check_number_size(input, index)) {
+    std::cout << YELLOW BOLD "Error: Number too large or invalid input!" RESET
+              << std::endl;
     return (0);
+  }
+  if (index >= phonebook.getCount() || index >= 8) {
+    std::cout << YELLOW BOLD "Error: No entry with that index!" RESET
+              << std::endl;
+    return (0);
+  }
   return (1);
 }
 
@@ -99,6 +112,7 @@ void ft_search_contact(PhoneBook &phonebook) {
   do {
     std::cout << "Enter index: ";
     std::getline(std::cin, input);
+    std::cout << std::endl;
   } while (!is_valid_index(phonebook, input, index));
   phonebook.printContact(index);
 }

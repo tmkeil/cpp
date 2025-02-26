@@ -6,12 +6,12 @@
 #    By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/04 12:15:45 by tkeil             #+#    #+#              #
-#    Updated: 2025/02/25 14:00:34 by tkeil            ###   ########.fr        #
+#    Updated: 2025/02/26 12:57:29 by tkeil            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CXX = c++  
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98
+CXXFLAGS = -Wall -Wextra -Werror -std=c++11
 NAME = phonebook
 OBJSDIR = objs/
 
