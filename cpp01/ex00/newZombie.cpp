@@ -6,12 +6,10 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 20:59:06 by tkeil             #+#    #+#             */
-/*   Updated: 2025/02/13 20:59:26 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/03/10 13:33:34 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Zombie.hpp"
 
-Zombie* newZombie(std::string name) {
-    return (new Zombie(name));
-}
+Zombie *newZombie(std::string name) { return (new Zombie(name)); }

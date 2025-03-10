@@ -6,12 +6,10 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 20:58:39 by tkeil             #+#    #+#             */
-/*   Updated: 2025/02/18 12:16:14 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/03/10 13:32:12 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Zombie.hpp"
 
-void    randomChump(std::string name) {
-    Zombie  zombie{name};
-}
+void randomChump(std::string name) { Zombie zombie(name); }
