@@ -6,84 +6,61 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 12:00:10 by tkeil             #+#    #+#             */
-/*   Updated: 2025/02/22 14:42:50 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/03/10 16:26:39 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <string>
 
-// int main(int argc, char **argv) {
-//     std::ifstream   ifs;
-//     std::string     line;
-//     size_t          pos = 0;
-    
-//     if (argc != 4)
-//         return (1);
-//     ifs.open(argv[1], std::ifstream::in);
-//     if (!ifs.is_open())
-//     {
-//         std::cerr << "Error opening file!" << std::endl;
-//         return (1);
-//     }
-//     while (1)
-//     {
-//         if (!std::getline(ifs, line))
-//             break ;
-//         pos = 0;
-//         while (1)
-//         {
-//             pos = line.find(argv[2], pos + 1);
-//             if (pos != std::string::npos)
-//                 break ;
-//             std::cout << pos << std::endl;
-//         }
-//     }
-//     return (0);
-// }
+int open_files(char *in, std::ifstream &file_in, std::ofstream &file_out) {
+  file_in.open(std::string(in));
+  if (!file_in.is_open())
+    return (0);
+  file_out.open(std::string(in) + ".replace", std::ofstream::out);
+  if (!file_out.is_open())
+    return (file_in.close(), 0);
+  return (1);
+}
 
-// int main(void)
-// {
-//     std::string s = "abc def abc\nabc";
-//     size_t      i = 0;
-    
-//     i = s.find("abc", i);
-//     std::cout << i << std::endl;
-//     i = s.find("abc", i + 1);
-//     std::cout << i << std::endl;
-//     i = s.find("abc", i + 1);
-//     std::cout << i << std::endl;
-//     return (0);
-// }
+void do_sed(std::ifstream &file_in, std::ofstream &file_out, char *s1,
+            char *s2) {
+  std::size_t pos;
+  std::string line;
+  std::string result;
 
-int main(int argc, char **argv)
-{
-    if (argc != 4)
-        return (1);
-    std::size_t     pos;
-    std::string     line;
-    std::ifstream   file_in(argv[1], std::fstream::in);
-    std::string     file_o = std::string(argv[1]) + ".replace";
-    std::ofstream   file_out(file_o.c_str(), std::ofstream::out);
-    while (1)
-    {
-        pos = 0;
-        std::string     result = "";
-        if (!std::getline(file_in, line))
-            break ;
-        while (1)
-        {
-            pos = line.find(argv[2], pos);
-            if (pos == std::string::npos)
-                break ;
-            result += line.substr(0, pos);
-            result += std::string(argv[3]);
-            line = line.substr(pos + std::string(argv[2]).size());
-        }
-        result += line;
-        file_out << result << std::endl;
-    }  
-    file_in.close();
-    file_out.close(); 
+  while (1) {
+    pos = 0;
+    result = "";
+    if (!std::getline(file_in, line))
+      break;
+    while (1) {
+      pos = line.find(s1, pos);
+      if (pos == std::string::npos)
+        break;
+      result += line.substr(0, pos);
+      result += std::string(s2);
+      line = line.substr(pos + std::string(s1).size());
+    }
+    result += line;
+    file_out << result << std::endl;
+  }
+}
+
+int main(int argc, char **argv) {
+  std::ifstream file_in;
+  std::ofstream file_out;
+  if (argc != 4) {
+    std::cout << "wrong number of parameters [<filename>, <s1>, <s2>] {3}"
+              << std::endl;
+    return (1);
+  }
+  if (!open_files(argv[1], file_in, file_out)) {
+    std::cout << "error opening file" << std::endl;
+    return (1);
+  }
+  do_sed(file_in, file_out, argv[2], argv[3]);
+  file_in.close();
+  file_out.close();
 }
