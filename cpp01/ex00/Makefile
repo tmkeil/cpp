@@ -6,13 +6,13 @@
 #    By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/07 12:45:30 by tkeil             #+#    #+#              #
-#    Updated: 2025/02/13 21:00:48 by tkeil            ###   ########.fr        #
+#    Updated: 2025/03/10 13:34:29 by tkeil            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CXX = c++  
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
-NAME =  BraiiiiiiinnnzzzZ
+NAME =  ex00
 
 SRCS = main.cpp Zombie.cpp randomChump.cpp newZombie.cpp
 OBJS = $(SRCS:.cpp=.o)
