@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/20 12:00:10 by tkeil             #+#    #+#             */
-/*   Updated: 2025/03/10 16:26:39 by tkeil            ###   ########.fr       */
+/*   Created: 2025/03/10 22:19:07 by tkeil             #+#    #+#             */
+/*   Updated: 2025/03/10 22:38:15 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,28 +24,39 @@ int open_files(char *in, std::ifstream &file_in, std::ofstream &file_out) {
   return (1);
 }
 
+std::string getstr(std::ifstream &file_in, std::string &total) {
+  std::string line;
+
+  while (1) {
+    if (!std::getline(file_in, line))
+      break;
+    total += line;
+	if (!file_in.eof())
+		total += "\n";
+  }
+  return (total);
+}
+
 void do_sed(std::ifstream &file_in, std::ofstream &file_out, char *s1,
             char *s2) {
   std::size_t pos;
   std::string line;
   std::string result;
+  std::string total;
 
+  getstr(file_in, total);
+  pos = 0;
   while (1) {
-    pos = 0;
     result = "";
-    if (!std::getline(file_in, line))
+    pos = total.find(s1, pos);
+    if (pos == std::string::npos)
       break;
-    while (1) {
-      pos = line.find(s1, pos);
-      if (pos == std::string::npos)
-        break;
-      result += line.substr(0, pos);
-      result += std::string(s2);
-      line = line.substr(pos + std::string(s1).size());
-    }
-    result += line;
-    file_out << result << std::endl;
+    result += total.substr(0, pos);
+    result += std::string(s2);
+    total = total.substr(pos + std::string(s1).size());
+    file_out << result;
   }
+  file_out << total;
 }
 
 int main(int argc, char **argv) {
