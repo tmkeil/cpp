@@ -6,21 +6,28 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 12:05:31 by tkeil             #+#    #+#             */
-/*   Updated: 2025/02/19 12:52:21 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/03/10 16:32:57 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#pragma once
+#ifndef __HUMANB_H__
+#define __HUMANB_H__
+
 #include "Weapon.hpp"
 
-class HumanB
-{
+class HumanB {
 private:
-    std::string name;
-    Weapon      *weapon;
-public:
-    HumanB(std::string name);
-    ~HumanB();
+  HumanB();
+  std::string name;
+  Weapon *weapon;
 
-    void    attack() const;
-    void    setWeapon(Weapon& weapon);
+public:
+  HumanB(std::string name);
+  ~HumanB();
+
+  void attack() const;
+  void setWeapon(Weapon &weapon);
 };
+
+#endif
