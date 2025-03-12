@@ -6,11 +6,12 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 18:37:20 by tkeil             #+#    #+#             */
-/*   Updated: 2025/03/12 17:40:40 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/03/12 18:34:20 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
+#include <cmath>
 
 class Fixed {
 private:
