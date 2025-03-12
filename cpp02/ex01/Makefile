@@ -6,13 +6,13 @@
 #    By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/11 20:37:20 by tkeil             #+#    #+#              #
-#    Updated: 2025/03/12 15:12:10 by tkeil            ###   ########.fr        #
+#    Updated: 2025/03/11 20:37:43 by tkeil            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CXX = c++  
 CXXFLAGS = -Wall -Wextra -Werror -std=c++17
-NAME =  ex00
+NAME =  ex01
 OBJSDIR = objs/
 
 SRCS = main.cpp Fixed.cpp
