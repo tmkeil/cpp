@@ -6,14 +6,17 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 12:26:36 by tkeil             #+#    #+#             */
-/*   Updated: 2025/03/24 17:06:35 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/03/24 18:44:14 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ClapTrap.hpp"
 
 ClapTrap::ClapTrap()
-    : _name("NONAME"), _hitpoints(10), _energyPoints(10), _attackDamage(0) {}
+    : _name("NONAME"), _hitpoints(10), _energyPoints(10), _attackDamage(0) {
+		  std::cout << "Constructor called: \"" << _name << "\" was created!"
+			<< std::endl;
+	}
 
 ClapTrap::ClapTrap(std::string name)
     : _name(name), _hitpoints(10), _energyPoints(10), _attackDamage(0) {
@@ -26,7 +29,11 @@ ClapTrap::~ClapTrap() {
             << std::endl;
 }
 
-ClapTrap::ClapTrap(const ClapTrap &other) { *this = other; }
+ClapTrap::ClapTrap(const ClapTrap &other) {
+	std::cout << "Copy constructor called: \"" << _name << "\" was created!"
+			  << std::endl;
+	*this = other;
+}
 
 ClapTrap &ClapTrap::operator=(const ClapTrap &other) {
   if (this != &other) {
@@ -35,6 +42,8 @@ ClapTrap &ClapTrap::operator=(const ClapTrap &other) {
     this->_energyPoints = other._energyPoints;
     this->_attackDamage = other._attackDamage;
   }
+  std::cout << "Assignation operator called: \"" << _name << "\" was created!"
+			<< std::endl;
   return (*this);
 }
 
