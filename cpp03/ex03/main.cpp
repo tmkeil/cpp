@@ -6,41 +6,62 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 12:26:02 by tkeil             #+#    #+#             */
-/*   Updated: 2025/03/24 19:27:31 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/04/10 17:01:18 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "FragTrap.hpp"
+#include "DiamondTrap.hpp"
+int main()
+{
+	std::cout << "\n===== ClapTrap Test =====" << std::endl;
+	ClapTrap ct("Clappy");
+	ct.attack("Target A");
+	ct.takeDamage(5);
+	ct.beRepaired(3);
 
-bool is_dead(const FragTrap &obj) { return (obj.getHitPoints() < 1); }
+	std::cout << "\n===== ScavTrap Test =====" << std::endl;
+	ScavTrap st("Scavy");
+	st.attack("Target B");
+	st.takeDamage(10);
+	st.beRepaired(5);
+	st.guardGate();
 
-int main() {
-	FragTrap fragtrap("FragTrap");
-	FragTrap st2("FragTrap2");
+	std::cout << "\n===== FragTrap Test =====" << std::endl;
+	FragTrap ft("Fraggy");
+	ft.attack("Target C");
+	ft.takeDamage(15);
+	ft.beRepaired(10);
+	ft.highFivesGuys();
 
-	std::cout << std::endl << "Start\n"
-	<< "FragTrap's health: " << fragtrap.getHitPoints() << std::endl
-	<< "FragTrap2's health: " << st2.getHitPoints()
-	<< std::string(2, '\n');
-	
-	while (1) {
-		if (is_dead(fragtrap) || is_dead(st2)) {
-			std::cout << "soneone died!" << std::endl;
-			break;
-		}
-		fragtrap.attack(st2.getName());
-		st2.takeDamage(fragtrap.getAttackDamage());
-		st2.attack(fragtrap.getName());
-		if (!is_dead(st2))
-			fragtrap.takeDamage(st2.getAttackDamage());
-		st2.beRepaired(1);
-		fragtrap.beRepaired(1);
-		st2.highFivesGuys();
-		fragtrap.highFivesGuys();
-		std::cout << std::endl
-		<< "FragTrap's health: " << fragtrap.getHitPoints() << std::endl
-		<< "FragTrap2's health: " << st2.getHitPoints()
-		<< std::string(2, '\n');
-	}
-	return (0);	
+	std::cout << "\n===== DiamondTrap Test =====" << std::endl;
+	DiamondTrap dt("Kevin");
+
+	std::cout << "\nInitial state of DiamondTrap:" << std::endl;
+	std::cout << "Name: " << dt.getName() << std::endl;
+	std::cout << "HP: " << dt.getHitPoints() << std::endl;
+	std::cout << "EP: " << dt.getEnergyPoints() << std::endl;
+	std::cout << "AD: " << dt.getAttackDamage() << std::endl;
+
+	std::cout << "\nDiamondTrap attacking FragTrap:" << std::endl;
+	dt.attack(ft.getName());
+	ft.takeDamage(dt.getAttackDamage());
+
+	std::cout << "\nFragTrap counterattacks DiamondTrap:" << std::endl;
+	ft.attack(dt.getName());
+	dt.takeDamage(ft.getAttackDamage());
+
+	std::cout << "\nDiamondTrap repairs itself:" << std::endl;
+	dt.beRepaired(20);
+
+	std::cout << "\nTesting inherited special abilities:" << std::endl;
+	dt.guardGate();
+	dt.highFivesGuys();
+	dt.whoAmI();
+
+	std::cout << "\n===== Final Stats =====" << std::endl;
+	std::cout << "DiamondTrap HP: " << dt.getHitPoints() << std::endl;
+	std::cout << "FragTrap HP: " << ft.getHitPoints() << std::endl;
+
+	std::cout << "\n===== End of Test =====" << std::endl;
+	return 0;
 }
