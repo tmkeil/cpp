@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 12:26:02 by tkeil             #+#    #+#             */
-/*   Updated: 2025/03/24 17:17:53 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/04/10 17:12:08 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,32 +15,32 @@
 bool is_dead(const ClapTrap &obj) { return (obj.getHitPoints() < 1); }
 
 int main() {
-  ClapTrap claptrap("Claptrap");
-  ClapTrap ct2("ClapTrap2");
-  claptrap.setAttackDamage(3);
-  ct2.setAttackDamage(3);
+	std::cout << "\n===== ClapTrap Test Start =====\n" << std::endl;
 
-  std::cout << std::endl << "Start\n"
-  << "ClapTrap's health: " << claptrap.getHitPoints() << std::endl
-  << "ClapTrap2's health: " << ct2.getHitPoints()
-  << std::string(2, '\n');
+	ClapTrap claptrap1("Clappy");
+	ClapTrap claptrap2("Trappy");
 
-  while (1) {
-    if (is_dead(claptrap) || is_dead(ct2)) {
-      std::cout << "soneone died!" << std::endl;
-      break;
-    }
-    claptrap.attack(ct2.getName());
-    ct2.takeDamage(claptrap.getAttackDamage());
-    ct2.attack(claptrap.getName());
-    if (!is_dead(ct2))
-      claptrap.takeDamage(ct2.getAttackDamage());
-    ct2.beRepaired(1);
-    claptrap.beRepaired(1);
-    std::cout << std::endl
-              << "ClapTrap's health: " << claptrap.getHitPoints() << std::endl
-              << "ClapTrap2's health: " << ct2.getHitPoints()
-              << std::string(2, '\n');
-  }
-  return (0);
+	claptrap1.setAttackDamage(3);
+	claptrap2.setAttackDamage(3);
+
+	std::cout << "Initial Stats:\n";
+	std::cout << claptrap1.getName() << " HP: " << claptrap1.getHitPoints() << std::endl;
+	std::cout << claptrap2.getName() << " HP: " << claptrap2.getHitPoints() << "\n" << std::endl;
+
+	claptrap1.attack(claptrap2.getName());
+	claptrap2.takeDamage(claptrap1.getAttackDamage());
+
+	claptrap2.attack(claptrap1.getName());
+	claptrap1.takeDamage(claptrap2.getAttackDamage());
+
+	claptrap1.beRepaired(2);
+	claptrap2.beRepaired(2);
+
+	std::cout << "\nFinal Stats:\n";
+	std::cout << claptrap1.getName() << " HP: " << claptrap1.getHitPoints() << std::endl;
+	std::cout << claptrap2.getName() << " HP: " << claptrap2.getHitPoints() << std::endl;
+
+	std::cout << "\n===== ClapTrap Test End =====\n" << std::endl;
+
+	return 0;
 }

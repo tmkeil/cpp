@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 12:26:02 by tkeil             #+#    #+#             */
-/*   Updated: 2025/03/24 19:27:31 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/04/10 17:07:24 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,32 +15,31 @@
 bool is_dead(const FragTrap &obj) { return (obj.getHitPoints() < 1); }
 
 int main() {
-	FragTrap fragtrap("FragTrap");
-	FragTrap st2("FragTrap2");
+	std::cout << "\n===== FragTrap Test Start =====\n" << std::endl;
 
-	std::cout << std::endl << "Start\n"
-	<< "FragTrap's health: " << fragtrap.getHitPoints() << std::endl
-	<< "FragTrap2's health: " << st2.getHitPoints()
-	<< std::string(2, '\n');
-	
-	while (1) {
-		if (is_dead(fragtrap) || is_dead(st2)) {
-			std::cout << "soneone died!" << std::endl;
-			break;
-		}
-		fragtrap.attack(st2.getName());
-		st2.takeDamage(fragtrap.getAttackDamage());
-		st2.attack(fragtrap.getName());
-		if (!is_dead(st2))
-			fragtrap.takeDamage(st2.getAttackDamage());
-		st2.beRepaired(1);
-		fragtrap.beRepaired(1);
-		st2.highFivesGuys();
-		fragtrap.highFivesGuys();
-		std::cout << std::endl
-		<< "FragTrap's health: " << fragtrap.getHitPoints() << std::endl
-		<< "FragTrap2's health: " << st2.getHitPoints()
-		<< std::string(2, '\n');
-	}
-	return (0);	
+	FragTrap fragtrap1("Fraggy");
+	FragTrap fragtrap2("Trapster");
+
+	std::cout << "Initial Stats:\n";
+	std::cout << fragtrap1.getName() << " HP: " << fragtrap1.getHitPoints() << std::endl;
+	std::cout << fragtrap2.getName() << " HP: " << fragtrap2.getHitPoints() << "\n" << std::endl;
+
+	fragtrap1.attack(fragtrap2.getName());
+	fragtrap2.takeDamage(fragtrap1.getAttackDamage());
+
+	fragtrap2.attack(fragtrap1.getName());
+	fragtrap1.takeDamage(fragtrap2.getAttackDamage());
+
+	fragtrap1.beRepaired(10);
+	fragtrap2.beRepaired(5);
+
+	fragtrap1.highFivesGuys();
+	fragtrap2.highFivesGuys();
+
+	std::cout << "\nFinal Stats:\n";
+	std::cout << fragtrap1.getName() << " HP: " << fragtrap1.getHitPoints() << std::endl;
+	std::cout << fragtrap2.getName() << " HP: " << fragtrap2.getHitPoints() << std::endl;
+
+	std::cout << "\n===== FragTrap Test End =====\n" << std::endl;
+	return 0;
 }
