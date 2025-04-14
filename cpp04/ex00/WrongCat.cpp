@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 14:15:15 by tkeil             #+#    #+#             */
-/*   Updated: 2025/04/11 14:25:18 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/04/14 13:48:22 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ WrongCat::WrongCat() : WrongAnimal("WrongCat")
 WrongCat::WrongCat(const WrongCat &other) : WrongAnimal(other)
 {
 	std::cout << "WrongCat was copied!\n";
-	*this = other;
 }
 
 WrongCat &WrongCat::operator=(const WrongCat &other)
