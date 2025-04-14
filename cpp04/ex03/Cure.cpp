@@ -14,17 +14,13 @@
 
 Cure::Cure()
 {
+	type = "cure";
 	std::cout << "Cure default constr. called!\n";
 }
 
-Cure::Cure(std::string &type) : type(type)
+Cure::Cure(const Cure &other) : AMateria(other)
 {
-	std::cout << "Cure default constr. called!\n";
-}
-
-Cure::Cure(const Cure &other)
-{
-	*this = other;
+	std::cout << "Cure copying!\n";
 }
 
 Cure &Cure::operator=(const Cure &other)
@@ -47,4 +43,9 @@ std::string const &Cure::getType(void) const
 
 void Cure::use(ICharacter &target)
 {	
+}
+
+Cure *Cure::clone(void) const
+{
+	return (new Cure());
 }

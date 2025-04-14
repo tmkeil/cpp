@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:08:40 by tkeil             #+#    #+#             */
-/*   Updated: 2025/04/14 15:18:17 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/04/14 17:47:21 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,20 @@
 # define CURE_HPP
 
 #include "ICharacter.hpp"
+#include "AMateria.hpp"
 
-class Cure
+class Cure : public AMateria
 {
-private:
-	std::string type;
-
 public:
 	Cure();
-	Cure(std::string &type);
 	Cure(const Cure &other);
 	Cure &operator=(const Cure &other);
 	~Cure();
 
 	std::string const &getType() const;
-	virtual Cure* clone() const = 0;
-	virtual void use(ICharacter& target);
+	void setType(std::string &type);
+	Cure* clone() const;
+	void use(ICharacter& target);
 };
 
 #endif

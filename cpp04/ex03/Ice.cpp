@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:09:34 by tkeil             #+#    #+#             */
-/*   Updated: 2025/04/14 16:01:32 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/04/14 17:14:25 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,13 @@
 
 Ice::Ice()
 {
+	type = "ice";
 	std::cout << "Ice default constr. called!\n";
 }
 
-Ice::Ice(std::string &type) : type(type)
+Ice::Ice(const Ice &other) : AMateria(other)
 {
-	std::cout << "Ice default constr. called!\n";
-}
-
-Ice::Ice(const Ice &other)
-{
-	*this = other;
+	std::cout << "Ice copying!\n";
 }
 
 Ice &Ice::operator=(const Ice &other)
@@ -47,4 +43,9 @@ std::string const &Ice::getType(void) const
 
 void Ice::use(ICharacter &target)
 {	
+}
+
+Ice *Ice::clone(void) const
+{
+	return (new Ice());
 }

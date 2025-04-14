@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:08:40 by tkeil             #+#    #+#             */
-/*   Updated: 2025/04/14 15:18:00 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/04/14 17:47:11 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,19 @@
 #define ICE_HPP
 
 #include "ICharacter.hpp"
+#include "AMateria.hpp"
 
-class Ice
+class Ice : public AMateria
 {
-private:
-	std::string type;
-
 public:
 	Ice();
-	Ice(std::string &type);
 	Ice(const Ice &other);
 	Ice &operator=(const Ice &other);
 	~Ice();
 
 	std::string const &getType() const;
-	virtual Ice *clone() const = 0;
-	virtual void use(ICharacter &target);
+	Ice *clone() const;
+	void use(ICharacter &target);
 };
 
 #endif
