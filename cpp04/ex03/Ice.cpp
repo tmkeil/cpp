@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:09:34 by tkeil             #+#    #+#             */
-/*   Updated: 2025/04/14 15:10:10 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/04/14 16:01:32 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,13 @@ Ice &Ice::operator=(const Ice &other)
 Ice::~Ice()
 {
 	std::cout << "Ice default destr. called!\n";
+}
+
+std::string const &Ice::getType(void) const
+{
+	return (type);
+}
+
+void Ice::use(ICharacter &target)
+{	
 }

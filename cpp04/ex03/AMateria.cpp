@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:57:04 by tkeil             #+#    #+#             */
-/*   Updated: 2025/04/14 15:10:27 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/04/14 16:04:56 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,14 @@ AMateria &AMateria::operator=(const AMateria &other)
 AMateria::~AMateria()
 {
 	std::cout << "AMateria destr. called!\n";
+}
+
+std::string const &AMateria::getType(void) const
+{
+	return (type);
+}
+
+void AMateria::use(ICharacter &target)
+{
+	
 }

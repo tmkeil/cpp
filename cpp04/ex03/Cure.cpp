@@ -39,3 +39,12 @@ Cure::~Cure()
 {
 	std::cout << "Cure default destr. called!\n";
 }
+
+std::string const &Cure::getType(void) const
+{
+	return (type);
+}
+
+void Cure::use(ICharacter &target)
+{	
+}

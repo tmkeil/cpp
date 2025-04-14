@@ -6,12 +6,12 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:15:13 by tkeil             #+#    #+#             */
-/*   Updated: 2025/04/14 15:16:43 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/04/14 16:03:19 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ICHARACTER_HPP
-#define ICHARACTER_HPP
+#ifndef IMATERIA_HPP
+#define IMATERIA_HPP
 
 #include "AMateria.hpp"
 

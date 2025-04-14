@@ -6,19 +6,20 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:56:17 by tkeil             #+#    #+#             */
-/*   Updated: 2025/04/14 15:18:26 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/04/14 15:52:40 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef AMATERIA_HPP
-# define AMATERIA_HPP
+#define AMATERIA_HPP
 
-# include <iostream>
-#include "ICharacter.hpp"
+#include <iostream>
+
+class ICharacter;
 
 class AMateria
 {
-private:
+protected:
 	std::string type;
 
 public:
@@ -29,8 +30,8 @@ public:
 	~AMateria();
 
 	std::string const &getType() const;
-	virtual AMateria* clone() const = 0;
-	virtual void use(ICharacter& target);
+	virtual AMateria *clone() const = 0;
+	virtual void use(ICharacter &target);
 };
 
 #endif

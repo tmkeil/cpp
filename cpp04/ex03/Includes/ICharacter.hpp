@@ -6,14 +6,16 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:13:36 by tkeil             #+#    #+#             */
-/*   Updated: 2025/04/14 15:17:21 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/04/14 15:49:32 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ICHARACTER_HPP
 #define ICHARACTER_HPP
 
-#include "AMateria.hpp"
+# include <iostream>
+
+class AMateria;
 
 class ICharacter
 {
