@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 17:31:03 by tkeil             #+#    #+#             */
-/*   Updated: 2025/04/14 13:23:09 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/04/14 14:08:00 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,8 @@
 #include "Dog.hpp"
 #include "WrongCat.hpp"
 
-void	leaks(void)
-{
-	system("leaks ./ex00");
-}
-
 int main(void)
 {
-	// atexit(leaks);
 	std::string idea;
 
 	// Creating the array of objects

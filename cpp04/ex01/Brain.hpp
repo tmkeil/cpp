@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 14:31:48 by tkeil             #+#    #+#             */
-/*   Updated: 2025/04/14 13:18:17 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/04/14 14:12:01 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include <iostream>
 
-# define NUM_IDEAS 2
+# define NUM_IDEAS 100
 
 class Brain
 {
