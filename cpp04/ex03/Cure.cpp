@@ -12,9 +12,8 @@
 
 #include "Cure.hpp"
 
-Cure::Cure()
+Cure::Cure() : AMateria("cure")
 {
-	type = "cure";
 	std::cout << "Cure default constr. called!\n";
 }
 
@@ -23,29 +22,17 @@ Cure::Cure(const Cure &other) : AMateria(other)
 	std::cout << "Cure copying!\n";
 }
 
-Cure &Cure::operator=(const Cure &other)
-{
-	if (this != &other)
-	{
-	}
-	return (*this);
-}
-
 Cure::~Cure()
 {
 	std::cout << "Cure default destr. called!\n";
 }
 
-std::string const &Cure::getType(void) const
-{
-	return (type);
-}
-
 void Cure::use(ICharacter &target)
-{	
+{
+	std::cout << "* heals " << target.getName() << "'s wounds *\n";
 }
 
-Cure *Cure::clone(void) const
+AMateria *Cure::clone(void) const
 {
-	return (new Cure());
+	return (new Cure(*this));
 }
