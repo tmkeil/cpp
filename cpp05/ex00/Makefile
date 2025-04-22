@@ -6,16 +6,16 @@
 #    By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/13 12:25:53 by tkeil             #+#    #+#              #
-#    Updated: 2025/04/11 19:49:11 by tkeil            ###   ########.fr        #
+#    Updated: 2025/04/22 14:45:13 by tkeil            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CXX = c++  
 CXXFLAGS = -Wall -Wextra -Werror -std=c++17
-NAME =  ex02
+NAME =  ex00
 OBJSDIR = objs/
 
-SRCS = main.cpp Animal.cpp Dog.cpp Cat.cpp WrongAnimal.cpp WrongCat.cpp Brain.cpp
+SRCS = main.cpp Bureaucrat.cpp
 OBJS = $(SRCS:%.cpp=$(OBJSDIR)%.o)
 
 all: $(NAME)
