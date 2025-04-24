@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:05:50 by tkeil             #+#    #+#             */
-/*   Updated: 2025/04/22 18:08:12 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/04/24 12:22:59 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,37 +14,22 @@
 #define PRESIDENTAL_PARDON_FORM_HPP
 
 #include <iostream>
+#include "AForm.hpp"
+#include "Bureaucrat.hpp"
 
-class PresidentialPardonForm
+class PresidentialPardonForm : public AForm
 {
 private:
-	std::string name;
-	int grade;
-
+    std::string target;
 public:
 	PresidentialPardonForm();
-	PresidentialPardonForm(std::string name, int grade);
+	PresidentialPardonForm(std::string const &target);
 	PresidentialPardonForm(const PresidentialPardonForm &other);
 	PresidentialPardonForm &operator=(const PresidentialPardonForm &other);
 	~PresidentialPardonForm();
 
-	std::string const &getName() const;
-	int getGrade() const;
-	void incrementGrade();
-	void decrementGrade();
-
-	void signForm(Form &form) const;
-
-	class GradeTooHighException : public std::exception
-	{
-	public:
-		const char *what() const throw();
-	};
-	class GradeTooLowException : public std::exception
-	{
-	public:
-		const char *what() const throw();
-	};
+    void execute(Bureaucrat const & executor) const;
+    void presidentialPardon() const;
 };
 
 #endif

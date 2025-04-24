@@ -6,60 +6,93 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 13:32:44 by tkeil             #+#    #+#             */
-/*   Updated: 2025/04/22 17:55:20 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/04/24 13:17:56 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Form.hpp"
+#include <cstdlib>
+#include <ctime>
+#include "AForm.hpp"
 #include "Bureaucrat.hpp"
+#include "ShrubberyCreationForm.hpp"
+#include "RobotomyRequestForm.hpp"
+#include "PresidentialPardonForm.hpp"
 
 int main(void)
 {
-    std::cout << "Form with a valid grade\n";
+    srand(time(NULL));
+    std::cout << "\nShrubbery Test:\n";
     try
-	{
-        Form f("document1", 10, 11);
-		std::cout << f << std::endl;
+    {
+        Bureaucrat b("b", 130);
+        ShrubberyCreationForm shrubbery("garden");
+        std::cout << b << shrubbery;
+        b.signForm(shrubbery);
+        b.executeForm(shrubbery);
     }
     catch (std::exception &e)
-	{
-        std::cout << e.what() << std::endl;
+    {
+        std::cerr << e.what() << "\n";
     }
-	std::cout << std::endl;
-    std::cout << "Form with an invalid grade\n";
+
+    std::cout << "\nRobotomy Test:\n";
     try
-	{
-        Form f2("document2", 151, 42);
+    {
+        Bureaucrat b("b", 30);
+        RobotomyRequestForm rob("rob");
+        std::cout << b << rob;
+        b.signForm(rob);
+        b.executeForm(rob);
+        b.executeForm(rob);
+        b.executeForm(rob);
+        b.executeForm(rob);
+        b.executeForm(rob);
     }
     catch (std::exception &e)
-	{
-        std::cout << e.what() << std::endl;
+    {
+        std::cerr << e.what() << "\n";
     }
-	std::cout << std::endl;
-    std::cout << "Tim signs form \"doc\", because Tim's grade is higher than signGrade\n";
+
+    std::cout << "\nPresidential Test:\n";
     try
-	{
-        Bureaucrat b("Tim", 1);
-        Form s("doc", 50, 30);
-        b.signForm(s);
-        std::cout << s << std::endl;
+    {
+        Bureaucrat b("b", 7);
+        PresidentialPardonForm pres("pres");
+        std::cout << b << pres;
+        b.signForm(pres);
+        b.executeForm(pres);
     }
     catch (std::exception &e)
-	{
-        std::cout << e.what() << std::endl;
+    {
+        std::cerr << e.what() << "\n";
     }
-	std::cout << std::endl;
-    std::cout << "Tim tries to sign form \"doc\". (Not possible, because his grade is lower than signGrade)\n";
+
+    std::cout << "\nGrade too low Test\n";
     try
-	{
-        Bureaucrat b("Tim", 100);
-        Form s("doc", 50, 30);
-        b.signForm(s);
-        std::cout << s << std::endl;
+    {
+        Bureaucrat b("b", 151);
+        ShrubberyCreationForm shrubbery("garden");
+        std::cout << b << shrubbery;
+        b.signForm(shrubbery);
+        b.executeForm(shrubbery);
     }
-    catch (std::exception &e)
-	{
-        std::cout << e.what() << std::endl;
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
     }
-    return 0;
+    
+    std::cout << "\nForm not signed before executing Test\n";
+    try
+    {
+        Bureaucrat b("b", 40);
+        ShrubberyCreationForm shrubbery("garden");
+        std::cout << b << shrubbery;
+        b.executeForm(shrubbery);
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+
+    return (0);
 }

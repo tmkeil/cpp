@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   AForm.cpp                                           :+:      :+:    :+:   */
+/*   AForm.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:39:38 by tkeil             #+#    #+#             */
-/*   Updated: 2025/04/22 17:55:11 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/04/24 13:15:36 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ AForm::AForm() : name("default"), _isSigned(false), signGrade(150), executeGrade
 	std::cout << "AForm default constr. called!\n";
 }
 
-AForm::AForm(const std::string name, const int signGrade, const int executeGrade)
+AForm::AForm(std::string const &name, const int signGrade, const int executeGrade)
 	: name(name), _isSigned(false), signGrade(signGrade), executeGrade(executeGrade)
 {
 	std::cout << "AForm constr. called!\n";
@@ -68,18 +68,6 @@ int AForm::getExecuteGrade() const
 	return (executeGrade);
 }
 
-void AForm::beSigned(const Bureaucrat &bureaucrat)
-{
-	if (bureaucrat.getGrade() > signGrade)
-		throw GradeTooLowException();
-	else if (bureaucrat.getGrade() < 1)
-		throw GradeTooHighException();
-	else if (_isSigned)
-		throw AFormAlreadySignedException();
-	else
-		_isSigned = true;
-}
-
 const char *AForm::GradeTooHighException::what() const throw()
 {
 	return ("AForm grade too high!");
@@ -95,6 +83,11 @@ const char *AForm::AFormAlreadySignedException::what() const throw()
 	return ("AForm is already signed!");
 }
 
+const char *AForm::AFormNotSignedException::what() const throw()
+{
+    return ("AForm is not signed!");
+}
+
 std::ostream &operator<<(std::ostream &out, const AForm &AForm)
 {
 	out << "AForm: " << AForm.getName() << "\n";
@@ -102,4 +95,26 @@ std::ostream &operator<<(std::ostream &out, const AForm &AForm)
 	out << "Execute grade: " << AForm.getExecuteGrade() << "\n";
 	out << "is signed: " << (AForm.isSigned() ? "true" : "false") << "\n";
 	return (out);
+}
+
+void AForm::beSigned(const Bureaucrat &bureaucrat)
+{
+	if (bureaucrat.getGrade() > signGrade)
+		throw GradeTooLowException();
+	else if (bureaucrat.getGrade() < 1)
+		throw GradeTooHighException();
+	else if (_isSigned)
+		throw AFormAlreadySignedException();
+	else
+		_isSigned = true;
+}
+
+void AForm::execute(Bureaucrat const & executor) const
+{
+    if (!isSigned())
+        throw AFormNotSignedException();
+    if (executor.getGrade() > executeGrade)
+        throw GradeTooLowException();
+    if (executor.getGrade() < 1)
+        throw GradeTooHighException();
 }

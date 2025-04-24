@@ -6,28 +6,23 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 18:08:30 by tkeil             #+#    #+#             */
-/*   Updated: 2025/04/22 18:08:46 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/04/24 12:55:53 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PresidentialPardonForm.hpp"
 
-PresidentialPardonForm::PresidentialPardonForm() : name("default"), grade(150)
+PresidentialPardonForm::PresidentialPardonForm() : AForm("PresidentialPardonForm", 25, 5), target("default")
 {
 	std::cout << "PresidentialPardonForm default constr. called!\n";
 }
 
-PresidentialPardonForm::PresidentialPardonForm(std::string name, int grade)
-	: name(name), grade(grade)
+PresidentialPardonForm::PresidentialPardonForm(std::string const &target) : AForm("PresidentialPardonForm", 25, 5), target(target)
 {
 	std::cout << "PresidentialPardonForm constr. called!\n";
-	if (grade > 150)
-		throw GradeTooLowException();
-	else if (grade < 1)
-		throw GradeTooHighException();
 }
 
-PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm &other) : name(other.name), grade(other.grade)
+PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm &other) : AForm(other), target(other.target)
 {
 	std::cout << "PresidentialPardonForm copying!\n";
 }
@@ -36,10 +31,10 @@ PresidentialPardonForm &PresidentialPardonForm::operator=(const PresidentialPard
 {
 	std::cout << "PresidentialPardonForm assigning!\n";
 	if (this != &other)
-	{
-		this->name = other.name;
-		this->grade = other.grade;
-	}
+    {
+        target = other.target;
+        AForm::operator=(other);
+    }
 	return (*this);
 }
 
@@ -47,4 +42,15 @@ PresidentialPardonForm::~PresidentialPardonForm()
 {
 	std::cout << "PresidentialPardonForm destructor called!\n";
 	
+}
+
+void PresidentialPardonForm::execute(Bureaucrat const & executor) const
+{
+    AForm::execute(executor);
+    this->presidentialPardon();
+}
+
+void PresidentialPardonForm::presidentialPardon() const
+{
+    std::cout << target << " has been pardoned by Zaphod Beeblebrox.\n";
 }

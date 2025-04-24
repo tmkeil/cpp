@@ -6,19 +6,19 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 13:33:16 by tkeil             #+#    #+#             */
-/*   Updated: 2025/04/22 17:55:02 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/04/24 12:05:28 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
-#include "Form.hpp"
+#include "AForm.hpp"
 
 Bureaucrat::Bureaucrat() : name("default"), grade(150)
 {
 	std::cout << "Bureaucrat default constr. called!\n";
 }
 
-Bureaucrat::Bureaucrat(std::string name, int grade)
+Bureaucrat::Bureaucrat(std::string const &name, int grade)
 	: name(name), grade(grade)
 {
 	std::cout << "Bureaucrat constr. called!\n";
@@ -37,10 +37,7 @@ Bureaucrat &Bureaucrat::operator=(const Bureaucrat &other)
 {
 	std::cout << "Bureaucrat assigning!\n";
 	if (this != &other)
-	{
-		this->name = other.name;
 		this->grade = other.grade;
-	}
 	return (*this);
 }
 
@@ -90,7 +87,7 @@ std::ostream &operator<<(std::ostream &out, const Bureaucrat &bureaucrat)
 	return (out);
 }
 
-void Bureaucrat::signForm(Form &form) const
+void Bureaucrat::signForm(AForm &form) const
 {
 	try
 	{
@@ -99,6 +96,19 @@ void Bureaucrat::signForm(Form &form) const
 	}
 	catch (std::exception &e)
 	{
-		std::cout << this->getName() << " couldn't sign " << form.getName() << " because " << e.what() << "\n";
+		std::cerr << this->getName() << " couldn't sign " << form.getName() << " because " << e.what() << "\n";
 	}
+}
+
+void Bureaucrat::executeForm(AForm const & form) const
+{
+    try
+    {
+        form.execute(*this);
+        std::cout << this->getName() << " executed " << form.getName() << "\n";
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr <<this->getName() << " couldn't execute " << form.getName() << " because " << e.what() << "\n";
+    }
 }
