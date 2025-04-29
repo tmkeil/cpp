@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 21:59:57 by tkeil             #+#    #+#             */
-/*   Updated: 2025/04/28 22:26:14 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/04/29 13:02:56 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,5 @@ Base &Base::operator=(const Base &other)
 }
 
 Base::~Base()
-{
-}
-
-void Base::identify(Base* p)
-{
-    
-}
-
-void Base::identify(Base& p)
 {
 }

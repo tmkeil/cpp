@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 21:59:53 by tkeil             #+#    #+#             */
-/*   Updated: 2025/04/28 22:27:48 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/04/29 13:03:09 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ public:
     C(const C &other);
     C &operator=(const C &other);
     ~C();
-
-    Base * generate(void) const;
 };
 
 #endif
