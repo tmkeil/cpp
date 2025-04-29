@@ -1,25 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Data.hpp                                           :+:      :+:    :+:   */
+/*   iter.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 21:50:42 by tkeil             #+#    #+#             */
-/*   Updated: 2025/04/28 21:51:25 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/04/29 14:37:08 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DATA_HPP
-#define DATA_HPP
+#ifndef ITER_HPP
+#define ITER_HPP
 
 #include <iostream>
 
-struct Data
+// template function
+template <typename T, typename F>
+void iter(T *array, size_t length, F func)
 {
-    int number;
-    std::string text;
-    Data(int nbr, std::string s) : number(nbr), text(s) {};
-};
+    for (size_t i = 0; i < length; i++)
+        func(array[i]);
+}
+
+// explicit example function
+// void iter(void *array, size_t length, void (*f)(void *))
+// {
+//     for (size_t i = 0; i < length; i++)
+//     {
+//         f(static_cast<void**>(array)[i]);
+//     }
+// }
 
 #endif
