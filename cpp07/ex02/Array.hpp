@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:43:19 by tkeil             #+#    #+#             */
-/*   Updated: 2025/04/29 17:21:18 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/04/29 18:12:02 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,16 @@ public:
     Array &operator=(const Array &other);
     ~Array();
 
-    class AllocationException : public std::exception
+    T &operator[](const int index) const;
+
+    size_t size() const;
+    class OutOfRangeException : public std::exception
     {
     public:
         const char *what() const throw();
-    };    
+    };  
 };
+
+#include "Array.tpp"
 
 #endif

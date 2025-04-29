@@ -6,7 +6,7 @@
 #    By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/13 12:25:53 by tkeil             #+#    #+#              #
-#    Updated: 2025/04/29 14:43:05 by tkeil            ###   ########.fr        #
+#    Updated: 2025/04/29 18:03:25 by tkeil            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CXXFLAGS = -Wall -Wextra -Werror -std=c++17
 NAME =  ex02
 OBJSDIR = objs/
 
-SRCS = main.cpp Array.cpp Array.tpp
+SRCS = main.cpp
 OBJS = $(SRCS:%.cpp=$(OBJSDIR)%.o)
 
 all: $(NAME)

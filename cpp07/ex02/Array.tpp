@@ -6,9 +6,12 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:44:11 by tkeil             #+#    #+#             */
-/*   Updated: 2025/04/29 17:22:09 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/04/29 18:40:48 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef ARRAY_TPP
+#define ARRAY_TPP
 
 #include "Array.hpp"
 
@@ -26,7 +29,7 @@ template <typename T>
 Array<T>::Array(const Array &other) : array(new T[other.length]), length(other.length)
 {
     for (size_t i = 0; i < length; i++)
-        array[i] = other.array[i]
+        array[i] = other.array[i];
 }
 
 template <typename T>
@@ -38,8 +41,6 @@ Array<T> &Array<T>::operator=(const Array &other)
         delete[] array;
     array = new T[other.length];
     length = other.length;
-    if (!array)
-        throw AllocationException();
     for (size_t i = 0; i < length; i++)
         array[i] = other.array[i];
     return *this;
@@ -53,7 +54,23 @@ Array<T>::~Array()
 }
 
 template <typename T>
-const char *Array<T>::AllocationException::what() const throw()
+const char *Array<T>::OutOfRangeException::what() const throw()
 {
-    return "Allocation failed";
+    return "Index out of range.\n";
 }
+
+template <typename T>
+size_t Array<T>::size() const
+{
+    return (length);
+}
+
+template <typename T>
+T &Array<T>::operator[](const int index) const
+{
+    if (index >= static_cast<int>(length) || index < 0)
+        throw OutOfRangeException();
+    return (array[index]);
+}
+
+#endif
