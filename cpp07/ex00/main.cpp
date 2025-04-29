@@ -6,42 +6,28 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:50:49 by tkeil             #+#    #+#             */
-/*   Updated: 2025/04/29 13:57:16 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/04/29 14:02:09 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 
-void swap(int &param1, int &param2)
+template <typename T>
+void swap(T &param1, T &param2)
 {
     int tmp = param1;
     param1 = param2;
     param2 = tmp;
 }
 
-int &min(int &param1, int &param2)
+template <typename T>
+T &min(T &param1, T &param2)
 {
     return (param1 < param2 ? param1 : param2);
 }
 
-int &max(int &param1, int &param2)
-{
-    return (param1 > param2 ? param1 : param2);
-}
-
-void swap(std::string &param1, std::string &param2)
-{
-    std::string tmp = param1;
-    param1 = param2;
-    param2 = tmp;
-}
-
-std::string &min(std::string &param1, std::string &param2)
-{
-    return (param1 < param2 ? param1 : param2);
-}
-
-std::string &max(std::string &param1, std::string &param2)
+template <typename T>
+T &max(T &param1, T &param2)
 {
     return (param1 > param2 ? param1 : param2);
 }
