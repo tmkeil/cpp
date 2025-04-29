@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 22:00:02 by tkeil             #+#    #+#             */
-/*   Updated: 2025/04/29 13:04:21 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/04/29 13:39:56 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@ B::B()
 {
 }
 
-B::B(const B &other)
+B::B(const B &other) : Base(other)
 {
-    *this = other;
 }
 
 B &B::operator=(const B &other)
