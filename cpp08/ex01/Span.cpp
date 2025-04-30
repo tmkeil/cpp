@@ -48,19 +48,41 @@ Span<T>::~Span()
 template <typename T>
 void Span<T>::addNumber(int n)
 {
+    if (container.size() >= N)
+        throw ContainerFullException();
     container.push_back(n);
 }
 
 template <typename T>
 int Span<T>::shortestSpan(T &container)
 {
-    
+    if (container.size() < 2)
+        throw NotEnoughElementsException();
+    int shortest = 0;
+    auto start = std::vector<int>::iterator container.begin();
+    auto end = std::vector<int>::iterator container.begin();
+
+    while (start != end)
+    {
+        if ()
+    }
+    return (shortest);
 }
 
 template <typename T>
 int Span<T>::longestSpan(T &container)
 {
+    if (container.size() < 2)
+        throw NotEnoughElementsException();
+    int longest = INT_MAX;
+    auto start = std::vector<int>::iterator container.begin();
+    auto end = std::vector<int>::iterator container.begin();
 
+    while (start != end)
+    {
+        if ()
+    }
+    return (longest);
 }
 
 template <typename T>
