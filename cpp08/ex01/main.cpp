@@ -6,29 +6,58 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 20:24:24 by tkeil             #+#    #+#             */
-/*   Updated: 2025/04/29 14:38:12 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/04/30 20:06:49 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "iter.hpp"
-
-void printInt(const int &x)
-{
-    std::cout << x << " ";
-}
-
-void printString(const std::string &str)
-{
-    std::cout << str << " ";
-}
+#include "Span.hpp"
 
 int main(void)
 {
-    int arr[] = {1, 2, 3, 4, 5};
-    iter(arr, 5, printInt);
-    std::cout << std::endl;
-
-    std::string strs[] = {"Hello", "World", "!"};
-    iter(strs, 3, printString);
-    std::cout << std::endl;
+	srand(time(NULL));
+	Span span(NUMBERS);
+	std::cout << "Filling the container with random values...\n";
+	for (size_t i = 0; i < NUMBERS + 2; i++)
+	{
+		try
+		{
+			span.addNumber(rand() % 10000);
+		}
+		catch(const std::exception& e)
+		{
+			std::cerr << e.what() << '\n';
+		}
+	}
+	
+	std::cout << "\nPrinting the container through the operator[]...\n";
+	for (size_t i = 0; i < NUMBERS + 2; i++)
+	{
+		try
+		{
+			std::cout << span[i] << std::endl;
+		}
+		catch(const std::exception& e)
+		{
+			std::cerr << e.what() << '\n';
+		}
+	}
+	
+	try
+	{
+		std::cout << "\nshortest span: " << span.shortestSpan() << std::endl;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
+	
+	try
+	{
+		std::cout << "longest span: " << span.longestSpan() << std::endl;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
+	return (0);
 }

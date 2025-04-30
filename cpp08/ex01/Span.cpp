@@ -6,93 +6,90 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 21:02:35 by tkeil             #+#    #+#             */
-/*   Updated: 2025/04/30 11:27:23 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/04/30 19:02:45 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Span.hpp"
 
-template <typename T>
-Span<T>::Span() : N(0)
+Span::Span() : N(0)
 {
 }
 
-template <typename T>
-Span<T>::Span(const unsigned int n) : N(n)
+Span::Span(const unsigned int N) : N(N)
 {
 }
 
-template <typename T>
-Span<T>::Span(const Span &other) : N(other.N)
+Span::Span(const Span &other) : N(other.N)
 {
-    for (auto it = other.container.begin(); it != other.container.end(); it++)
-        container.push_back(*it);
+	for (auto it = other.container.begin(); it != other.container.end(); it++)
+		container.push_back(*it);
 }
 
-template <typename T>
-Span<T> &Span<T>::operator=(const Span &other)
+Span &Span::operator=(const Span &other)
 {
-    if (this == &other)
-        return *this;
-    N = other.N;
-    for (auto it = other.container.begin(); it != other.container.end(); it++)
-        container.push_back(*it);
-    return *this;
+	if (this == &other)
+		return *this;
+	N = other.N;
+	for (auto it = other.container.begin(); it != other.container.end(); it++)
+		container.push_back(*it);
+	return *this;
 }
 
-template <typename T>
-Span<T>::~Span()
+Span::~Span()
 {
 }
 
-template <typename T>
-void Span<T>::addNumber(int n)
+void Span::addNumber(int n)
 {
-    if (container.size() >= N)
-        throw ContainerFullException();
-    container.push_back(n);
+	if (container.size() >= N)
+		throw ContainerFullException();
+	container.push_back(n);
 }
 
-template <typename T>
-int Span<T>::shortestSpan(T &container)
+int Span::shortestSpan()
 {
-    if (container.size() < 2)
-        throw NotEnoughElementsException();
-    int shortest = 0;
-    auto start = std::vector<int>::iterator container.begin();
-    auto end = std::vector<int>::iterator container.begin();
-
-    while (start != end)
-    {
-        if ()
-    }
-    return (shortest);
+	if (container.size() < 2)
+		throw NotEnoughElementsException();
+	std::vector<int> tmp = container;
+	std::sort(tmp.begin(), tmp.end());
+	int shortest = tmp[1] - tmp[0];
+	for (size_t i = 1; i < tmp.size() - 1; i++)
+	{
+		int diff = tmp[i + 1] - tmp[i];
+		if (diff < shortest)
+			shortest = diff;
+	}
+	return (shortest);
 }
 
-template <typename T>
-int Span<T>::longestSpan(T &container)
+int Span::longestSpan()
 {
-    if (container.size() < 2)
-        throw NotEnoughElementsException();
-    int longest = INT_MAX;
-    auto start = std::vector<int>::iterator container.begin();
-    auto end = std::vector<int>::iterator container.begin();
-
-    while (start != end)
-    {
-        if ()
-    }
-    return (longest);
+	if (container.size() < 2)
+		throw NotEnoughElementsException();
+	std::vector<int> tmp = container;
+	std::sort(tmp.begin(), tmp.end());
+	return (tmp[tmp.size() - 1] - tmp[0]);
 }
 
-template <typename T>
-const char *Span<T>::ContainerFullException::what() const throw()
+const char *Span::ContainerFullException::what() const throw()
 {
-   return ("Container is already full.");
+	return ("Container is already full.");
 }
 
-template <typename T>
-const char *Span<T>::NotEnoughElementsException::what() const throw()
+const char *Span::NotEnoughElementsException::what() const throw()
 {
-   return ("Container doesn't have enough elements.");
+	return ("Container doesn't have enough elements.");
+}
+
+const char *Span::OutOfRangeException::what() const throw()
+{
+	return ("Index is out of range.");
+}
+
+int const &Span::operator[](int index)
+{
+	if (index >= static_cast<int>(N) || index < 0)
+		throw OutOfRangeException();
+	return (container[index]);
 }
