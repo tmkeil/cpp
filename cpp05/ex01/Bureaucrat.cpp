@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 13:33:16 by tkeil             #+#    #+#             */
-/*   Updated: 2025/04/22 17:55:02 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/04/23 17:15:52 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ Bureaucrat::Bureaucrat() : name("default"), grade(150)
 	std::cout << "Bureaucrat default constr. called!\n";
 }
 
-Bureaucrat::Bureaucrat(std::string name, int grade)
+Bureaucrat::Bureaucrat(std::string const &name, int grade)
 	: name(name), grade(grade)
 {
 	std::cout << "Bureaucrat constr. called!\n";
@@ -37,10 +37,7 @@ Bureaucrat &Bureaucrat::operator=(const Bureaucrat &other)
 {
 	std::cout << "Bureaucrat assigning!\n";
 	if (this != &other)
-	{
-		this->name = other.name;
 		this->grade = other.grade;
-	}
 	return (*this);
 }
 

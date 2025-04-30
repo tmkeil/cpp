@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:39:38 by tkeil             #+#    #+#             */
-/*   Updated: 2025/04/22 17:55:11 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/04/23 17:16:50 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ Form::Form() : name("default"), _isSigned(false), signGrade(150), executeGrade(1
 	std::cout << "Form default constr. called!\n";
 }
 
-Form::Form(const std::string name, const int signGrade, const int executeGrade)
+Form::Form(const std::string &name, const int signGrade, const int executeGrade)
 	: name(name), _isSigned(false), signGrade(signGrade), executeGrade(executeGrade)
 {
 	std::cout << "Form constr. called!\n";

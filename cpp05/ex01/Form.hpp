@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:39:54 by tkeil             #+#    #+#             */
-/*   Updated: 2025/04/22 17:55:16 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/04/23 17:17:06 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ private:
 
 public:
 	Form();
-	Form(std::string name, int signGrade, int executeGrade);
+	Form(std::string const &name, int signGrade, int executeGrade);
 	Form(const Form &other);
 	Form &operator=(const Form &other);
 	~Form();

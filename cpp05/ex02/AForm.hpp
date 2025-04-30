@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:39:54 by tkeil             #+#    #+#             */
-/*   Updated: 2025/04/24 11:47:22 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/04/24 16:14:06 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ public:
 	AForm(std::string const &name, int signGrade, int executeGrade);
 	AForm(const AForm &other);
 	AForm &operator=(const AForm &other);
-	~AForm();
+	virtual ~AForm();
 
 	std::string const &getName() const;
 	bool isSigned() const;

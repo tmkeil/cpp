@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:50:49 by tkeil             #+#    #+#             */
-/*   Updated: 2025/04/29 20:51:39 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/04/30 11:06:58 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int main(void)
     vec.push_back(10);
     try
     {
-        std::vector<int>::iterator it = easyfind(vec, 4);
+        std::vector<int>::iterator it = easyfind(vec, 10);
         std::cout << "Found: " << *it << std::endl;
     }
     catch (const std::exception &e)
