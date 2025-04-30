@@ -62,3 +62,15 @@ int Span<T>::longestSpan(T &container)
 {
 
 }
+
+template <typename T>
+const char *Span<T>::ContainerFullException::what() const throw()
+{
+   return ("Container is already full.");
+}
+
+template <typename T>
+const char *Span<T>::NotEnoughElementsException::what() const throw()
+{
+   return ("Container doesn't have enough elements.");
+}
