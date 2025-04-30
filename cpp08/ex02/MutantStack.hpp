@@ -1,33 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Array.hpp                                          :+:      :+:    :+:   */
+/*   MutantStack.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:43:19 by tkeil             #+#    #+#             */
-/*   Updated: 2025/04/29 18:12:02 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/04/30 20:14:38 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ARRAY_HPP
-#define ARRAY_HPP
+#ifndef MUTANT_STACK_HPP
+#define MUTANT_STACK_HPP
 
 #include <iostream>
 
 template <typename T>
-class Array
+class MutantStack
 {
 private:
-    T       *array;
+    T       stack;
     size_t  length;
     
 public:
-    Array();
-    Array(const unsigned int size);
-    Array(const Array &other);
-    Array &operator=(const Array &other);
-    ~Array();
+    MutantStack();
+    MutantStack(const MutantStack &other);
+    MutantStack &operator=(const MutantStack &other);
+    ~MutantStack();
 
     T &operator[](const int index) const;
 
@@ -39,6 +38,6 @@ public:
     };  
 };
 
-#include "Array.tpp"
+#include "MutantStack.tpp"
 
 #endif
