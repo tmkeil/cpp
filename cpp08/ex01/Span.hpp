@@ -34,6 +34,16 @@ public:
     void addNumber(int n);
     int shortestSpan(T &container);
     int longestSpan(T &container);
+    class ContainerFullException : public std::exception
+    {
+    public:
+        const char *what() const throw();
+    }
+    class NotEnoughElementsException : public std::exception
+    {
+    public:
+        const char *what() const throw();
+    }
 };
 
 #endif
