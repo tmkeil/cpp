@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 21:02:35 by tkeil             #+#    #+#             */
-/*   Updated: 2025/04/30 19:02:45 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/05/02 18:12:51 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ Span::Span(const unsigned int N) : N(N)
 
 Span::Span(const Span &other) : N(other.N)
 {
-	for (auto it = other.container.begin(); it != other.container.end(); it++)
+	for (std::vector<int>::const_iterator it = other.container.begin(); it != other.container.end(); it++)
 		container.push_back(*it);
 }
 
