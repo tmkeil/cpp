@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 20:15:08 by tkeil             #+#    #+#             */
-/*   Updated: 2025/05/02 20:14:26 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/05/03 14:34:08 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typename MutantStack<T>::const_iterator MutantStack<T>::begin() const
 template <typename T>
 typename MutantStack<T>::const_iterator MutantStack<T>::end() const
 {
-	return (this->c.begin());
+	return (this->c.end());
 }
 
 template <typename T>

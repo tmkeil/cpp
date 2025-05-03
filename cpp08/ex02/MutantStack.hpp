@@ -16,6 +16,10 @@
 #include <stack>
 #include <deque>
 #include <iostream>
+#include <list>
+#include <deque>
+#include <map>
+#include <set>
 
 template <typename T>
 class MutantStack : public std::stack<T>
