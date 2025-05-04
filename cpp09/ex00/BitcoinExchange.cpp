@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 18:49:37 by tkeil             #+#    #+#             */
-/*   Updated: 2025/05/04 13:16:21 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/05/04 19:27:37 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ BitcoinExchange::BitcoinExchange()
 {
 }
 
-BitcoinExchange::BitcoinExchange(const char *file) : _input(file), _data(DATA)
+BitcoinExchange::BitcoinExchange(const char *file) : _data(DATA), _input(file)
 {
 }
 
-BitcoinExchange::BitcoinExchange(const BitcoinExchange &other) : _input(other._input), _data(other._data), _input_map(other._input_map), _data_map(other._data_map)
+BitcoinExchange::BitcoinExchange(const BitcoinExchange &other) : _data(other._data), _input(other._input), _data_map(other._data_map)
 {
 }
 
@@ -31,7 +31,6 @@ BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &other)
     _data = other._data;
     _input = other._input;
     _data_map = other._data_map;
-    _input_map = other._input_map;
     return (*this);
 }
 
@@ -43,29 +42,52 @@ void BitcoinExchange::openFile(std::ifstream &stream, std::string &file)
 {
     stream.open(file, std::ifstream::in);
     if (!stream.is_open())
-        throw COULD_NOT_OPEN_FILE_EXCEPTION();
+        throw Open_File();
+}
+
+bool BitcoinExchange::extractNumber(std::string const &balance, float &val)
+{
+    size_t pos = 0;
+    try
+    {
+        val = std::stof(balance, &pos);
+        if (pos != balance.size())
+            return false;
+        return true;
+    }
+    catch (...)
+    {
+        return false;
+    }
 }
 
 bool BitcoinExchange::isValidDate(std::string const &str)
 {
     int y, m, d;
     char sep1, sep2;
-    struct tm * timeinfo;
-    std::stringstream ss(str);
+    std::tm timeinfo =  {};
+    std::istringstream ss(str);
 
+    if (str.size() != 10)
+        return (false);
+    for (size_t i = 0; i < 10; i++)
+    {
+        if (i != 4 && i != 7 && !std::isdigit(str[i]))
+            return (false);
+    }
     if (!(ss >> y >> sep1 >> m >> sep2 >> d))
         return (false);
     if (sep1 != '-' || sep2 != '-')
         return (false);
-    timeinfo->tm_year = y - 1900;
-    timeinfo->tm_mon = m - 1;
-    timeinfo->tm_mday = d;
-    time_t rawtime = std::mktime(timeinfo);
+    timeinfo.tm_year = y - 1900;
+    timeinfo.tm_mon = m - 1;
+    timeinfo.tm_mday = d;
+    time_t rawtime = std::mktime(&timeinfo);
     if (rawtime == -1)
         return (false);
-    return (timeinfo->tm_year == y - 1900 &&
-            timeinfo->tm_mon == m - 1 &&
-            timeinfo->tm_mday == d);
+    return (timeinfo.tm_year == y - 1900 &&
+            timeinfo.tm_mon == m - 1 &&
+            timeinfo.tm_mday == d);
 }
 
 void BitcoinExchange::read_data()
@@ -75,23 +97,25 @@ void BitcoinExchange::read_data()
     std::string line, date, rate;
     
     openFile(data, _data);
+    std::getline(data, line);
     while (std::getline(data, line))
     {
-        std::stringstream ss(line);
+        date.clear();
+        rate.clear();
+        std::istringstream ss(line);
         if (std::getline(ss, date, ',') && std::getline(ss, rate))
         {
-            date.erase(0, date.find_last_not_of(" \t\r\f\v\n"));
+            date.erase(date.find_last_not_of(" \t\r\f\v\n") + 1);
             date.erase(0, date.find_first_not_of(" \t\r\f\v\n"));
-            rate.erase(0, rate.find_last_not_of(" \t\r\f\v\n"));
+            rate.erase(rate.find_last_not_of(" \t\r\f\v\n") + 1);
             rate.erase(0, rate.find_first_not_of(" \t\r\f\v\n"));
         }
-        if (date.empty() || !isValidDate(date))
+        if (!isValidDate(date))
         {
             data.close();
             throw Invalid_Date();
         }
-        std::stringstream ps(rate);
-        if (!(ps >> val))
+        if (rate.empty() || !rate.size() || !extractNumber(rate, val))
         {
             data.close();
             throw Invalid_Rate();
@@ -101,36 +125,66 @@ void BitcoinExchange::read_data()
     data.close();
 }
 
+float BitcoinExchange::getRate(std::string const &date)
+{
+    std::map<std::string, float>::iterator it = _data_map.lower_bound(date);
+    if (it == _data_map.end() || it->first != date)
+    {
+        if (it != _data_map.begin())
+            --it;
+    }
+    return (it->second);
+}
+
 void BitcoinExchange::printValues()
 {
-    float val;
     std::ifstream input;
     std::string line, date, balance;
     
     openFile(input, _input);
+    std::getline(input, line);
     while (std::getline(input, line))
     {
-        std::stringstream ss(line);
-        if (std::getline(ss, date, ',') && std::getline(ss, balance))
+        float val;
+        date.clear();
+        balance.clear();
+        std::istringstream ss(line);
+        if (std::getline(ss, date, '|') && std::getline(ss, balance))
         {
-            date.erase(0, date.find_last_not_of(" \t\r\f\v\n"));
+            date.erase(date.find_last_not_of(" \t\r\f\v\n") + 1);
             date.erase(0, date.find_first_not_of(" \t\r\f\v\n"));
-            balance.erase(0, balance.find_last_not_of(" \t\r\f\v\n"));
+            balance.erase(balance.find_last_not_of(" \t\r\f\v\n") + 1);
             balance.erase(0, balance.find_first_not_of(" \t\r\f\v\n"));
         }
-        if (date.empty() || !isValidDate(date))
+        if (!isValidDate(date))
         {
-            input.close();
-            throw Invalid_Date();
+            std::cerr << "Error: bad input => " << date << std::endl;
+            continue;
         }
-        std::stringstream ps(balance);
-        if (!(ps >> val))
+        if (date < _data_map.begin()->first)
         {
-            input.close();
-            throw Invalid_Rate();
+            std::cerr << "Error: no exchange rate available before " << _data_map.begin()->first << std::endl;
+            continue;
         }
-        _data_map[date] = val;
+        if (balance.empty() || !balance.size() || !extractNumber(balance, val))
+        {
+            std::cerr << "Error: not a number => " << balance << std::endl;
+            continue;
+        }
+        if (val > 1000)
+        {
+            std::cerr << "Error: too large a number\n";
+            continue;
+        }
+        if (val < 0)
+        {
+            std::cerr << "Error: not a positive number\n";
+            continue;
+        }
+        float rate = getRate(date);
+        std::cout << date << " => " << val << " = " << rate * val << std::endl;
     }
+    input.close();
 }
 
 void BitcoinExchange::run()
@@ -139,7 +193,17 @@ void BitcoinExchange::run()
     printValues();
 }
 
-const char *BitcoinExchange::COULD_NOT_OPEN_FILE_EXCEPTION::what() const throw()
+const char *BitcoinExchange::Open_File::what() const throw()
 {
-    return ("Error: Couldn't open file\n");
+    return ("Error: Couldn't open file!");
+}
+
+const char *BitcoinExchange::Invalid_Rate::what() const throw()
+{
+    return ("Error: Invalid exchange rate in btc_data!");
+}
+
+const char *BitcoinExchange::Invalid_Date::what() const throw()
+{
+    return ("Error: Invalid date format in btc_data!");
 }

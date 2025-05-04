@@ -6,7 +6,7 @@
 #    By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/13 12:25:53 by tkeil             #+#    #+#              #
-#    Updated: 2025/05/03 17:33:20 by tkeil            ###   ########.fr        #
+#    Updated: 2025/05/04 14:04:31 by tkeil            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CXXFLAGS = -Wall -Wextra -Werror -std=c++17
 NAME =  btc
 OBJSDIR = objs/
 
-SRCS = main.cpp
+SRCS = main.cpp BitcoinExchange.cpp
 OBJS = $(SRCS:%.cpp=$(OBJSDIR)%.o)
 
 all: $(NAME)
