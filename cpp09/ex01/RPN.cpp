@@ -96,12 +96,13 @@ void RPN::run(const char *arg)
 {
     std::string str(arg);
 
-    std::regex del(" \t\r\v\n\f");
+    std::regex del("\\s+");
     std::sregex_token_iterator it(str.begin(), str.end(), del, -1);
     std::sregex_token_iterator end;
     while (it != end)
     {
         std::string tok = *it;
+        // std::cout << "test tok = " << tok << std::endl;
         if (tok.length() == 1 && tok.find_first_of("+-*/") != std::string::npos)
         {
             if (stack.size() < 2)

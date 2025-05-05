@@ -6,13 +6,13 @@
 #    By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/13 12:25:53 by tkeil             #+#    #+#              #
-#    Updated: 2025/05/05 13:37:35 by tkeil            ###   ########.fr        #
+#    Updated: 2025/05/05 16:16:22 by tkeil            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CXX = c++  
 CXXFLAGS = -Wall -Wextra -Werror -std=c++17
-NAME =  rpn
+NAME =  RPN
 OBJSDIR = objs/
 
 SRCS = main.cpp RPN.cpp
