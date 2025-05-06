@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 18:01:02 by tkeil             #+#    #+#             */
-/*   Updated: 2025/05/06 14:54:29 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/05/06 16:05:55 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,19 @@
 #include <list>
 #include <regex>
 #include <utility>
+#include <deque>
 
 class PmergeMe
 {
 private:
     PmergeMe();
 	int	leftover;
-    std::vector<int> temp;
 	std::vector<std::pair<int, int>> groups;
     std::vector<int> main;
-    std::list<int> pend;
+    std::deque<int> pend;
+
+	static unsigned int jacobsthal(unsigned int n);
+	static unsigned int extractNum(std::string const &str);
 
 public:
     PmergeMe(int argc, char **arg);
@@ -39,8 +42,7 @@ public:
     ~PmergeMe();
 
     void run();
-    int extractNum(std::string const &str);
-	void groupElementsAndOrder();
+	void orderGroup();
     
     class Error : public std::exception
     {

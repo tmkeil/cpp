@@ -6,7 +6,7 @@
 #    By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/13 12:25:53 by tkeil             #+#    #+#              #
-#    Updated: 2025/05/06 14:50:50 by tkeil            ###   ########.fr        #
+#    Updated: 2025/05/06 16:41:26 by tkeil            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CXXFLAGS = -Wall -Wextra -Werror -std=c++17
 NAME =  PmergeMe
 OBJSDIR = objs/
 
-SRCS = main.cpp
+SRCS = main.cpp PmergeMe.cpp
 OBJS = $(SRCS:%.cpp=$(OBJSDIR)%.o)
 
 all: $(NAME)
