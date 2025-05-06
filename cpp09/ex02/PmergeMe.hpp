@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 18:01:02 by tkeil             #+#    #+#             */
-/*   Updated: 2025/05/05 19:33:03 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/05/06 14:54:29 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,18 @@
 #include <algorithm>
 #include <iostream>
 #include <cstdlib>
+#include <cstring>
 #include <list>
 #include <regex>
+#include <utility>
 
 class PmergeMe
 {
 private:
     PmergeMe();
+	int	leftover;
     std::vector<int> temp;
+	std::vector<std::pair<int, int>> groups;
     std::vector<int> main;
     std::list<int> pend;
 
@@ -36,6 +40,7 @@ public:
 
     void run();
     int extractNum(std::string const &str);
+	void groupElementsAndOrder();
     
     class Error : public std::exception
     {

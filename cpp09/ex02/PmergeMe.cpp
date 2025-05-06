@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 18:00:44 by tkeil             #+#    #+#             */
-/*   Updated: 2025/05/05 20:29:03 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/05/06 15:22:08 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,17 @@ PmergeMe::PmergeMe(int argc, char **arg)
 {
     if (argc > 2)
     {
-        for (int i = 0; i < argc; ++i)
-            temp.push_back(extractNum(arg[i]));
+        for (int i = 0; i < argc; i += 2)
+		{
+			int first = extractNum(arg[i]);
+			if (i < argc - 1)
+			{
+				int second = extractNum(arg[i + 1]);
+                groups.push_back(std::make_pair(first, second));
+			}
+			else
+				leftover = first;
+		}
     }
     else
     {
@@ -31,10 +40,24 @@ PmergeMe::PmergeMe(int argc, char **arg)
         std::sregex_token_iterator end;
         while (it != end)
         {
-            temp.push_back(extractNum(*it));
-            ++it;
+			int first = extractNum(*it);
+			if (++it != end)
+			{
+				int second = extractNum(*it);
+				groups.push_back(std::make_pair(first, second));
+			}
+			else
+				leftover = first;
         }
     }
+	for (auto &&pair : groups)
+	{
+		if (pair.first > pair.second)
+			std::swap(pair.first, pair.second);
+	}
+    std::sort(groups.begin(), groups.end(), [](const std::pair<int, int>& a, const std::pair<int, int> &b) {
+        return (a.second < b.second);
+    });
     run();
 }
 
@@ -56,6 +79,22 @@ PmergeMe::~PmergeMe()
 {
 }
 
+unsigned int jacobsthal(unsigned int n)
+{
+	if (n == 0)
+		return (0);
+	if (n == 1)
+		return (1);
+	int prev1 = 1, prev2 = 0, current = 0;
+	for (size_t i = 0; i < n; i++)
+	{
+		current = prev1 + 2 * prev2;
+		prev2 = prev1;
+		prev1 = current;
+	}
+	return (current);
+}
+
 int PmergeMe::extractNum(std::string const &str)
 {
     size_t pos;
@@ -74,6 +113,7 @@ int PmergeMe::extractNum(std::string const &str)
 
 void PmergeMe::run()
 {
+		
     std::cout << "Before: ";
     for (size_t i = 0; i < temp.size(); i++)
         std::cout << temp[i] << " ";
