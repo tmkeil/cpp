@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 18:00:44 by tkeil             #+#    #+#             */
-/*   Updated: 2025/05/06 18:25:03 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/05/06 19:32:19 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ PmergeMe::PmergeMe()
 {
 }
 
-PmergeMe::PmergeMe(int argc, char **arg) : leftover(-1)
+PmergeMe::PmergeMe(int argc, char **arg) : N(0), leftover(-1)
 {
 	// if: the numbers were parsed as one string. else: one number as one argument
 	if (argc > 2)
@@ -31,6 +31,7 @@ PmergeMe::PmergeMe(int argc, char **arg) : leftover(-1)
 			}
 			else
 				leftover = first;
+			
 		}
     }
     else
@@ -52,10 +53,11 @@ PmergeMe::PmergeMe(int argc, char **arg) : leftover(-1)
 				leftover = first;
         }
     }
+	N = groups.size() * 2 + (leftover != -1 ? 1 : 0);
     run();
 }
 
-PmergeMe::PmergeMe(const PmergeMe &other) : leftover(other.leftover), groups(other.groups), main(other.main), pend(other.pend)
+PmergeMe::PmergeMe(const PmergeMe &other) : N(0), leftover(other.leftover), groups(other.groups), main(other.main), pend(other.pend)
 {
 }
 
@@ -63,6 +65,7 @@ PmergeMe &PmergeMe::operator=(const PmergeMe &other)
 {
     if (this == &other)
         return *this;
+	N = other.N;
     main = other.main;
     pend = other.pend;
 	groups = other.groups;
@@ -135,6 +138,7 @@ void PmergeMe::orderGroup()
 
 void PmergeMe::run()
 {
+	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 	// Print the unordered numbers.
 	std::cout << "Before: ";
 	for (auto pair : groups)
@@ -183,12 +187,14 @@ void PmergeMe::run()
 		auto it = std::lower_bound(main.begin(), main.end(), leftover);
 		main.insert(it, leftover);
 	}
-	
+	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 	// Printing the sorted main chain:
     std::cout << "After:   ";
     for (int num : main)
         std::cout << num << " ";
     std::cout << std::endl;
+	std::cout << "Time to process a range of " << N << " elements with std::[...] : " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << " us\n";
+	std::cout << "Time to process a range of " << N << " elements with std::[...] : " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << " us\n";
 }
 
 const char *PmergeMe::Error::what() const throw()

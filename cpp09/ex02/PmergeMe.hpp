@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 18:01:02 by tkeil             #+#    #+#             */
-/*   Updated: 2025/05/06 16:05:55 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/05/06 19:26:26 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,17 @@
 #include <iostream>
 #include <cstdlib>
 #include <cstring>
-#include <list>
 #include <regex>
 #include <utility>
 #include <deque>
+#include <chrono>
 
 class PmergeMe
 {
 private:
     PmergeMe();
+	
+	int N;
 	int	leftover;
 	std::vector<std::pair<int, int>> groups;
     std::vector<int> main;
