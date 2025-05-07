@@ -102,7 +102,6 @@ void RPN::run(const char *arg)
     while (it != end)
     {
         std::string tok = *it;
-        // std::cout << "test tok = " << tok << std::endl;
         if (tok.length() == 1 && tok.find_first_of("+-*/") != std::string::npos)
         {
             if (stack.size() < 2)
