@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 18:00:44 by tkeil             #+#    #+#             */
-/*   Updated: 2025/05/07 16:12:08 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/05/07 16:27:26 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,13 +133,13 @@ unsigned int PmergeMe::extractNum(std::string const &str)
 
 void PmergeMe::run()
 {
-	// The used vector saves the state of an pend chain index (was it already pushed to the main or not).
+	// The used vector saves the state of a pend chain index (was it already pushed to the main or not).
 	std::vector<bool> usedVec(N / 2, false);
 	std::vector<bool> usedDeq(N / 2, false);
 	
 	// Calculating the jacobs sequence and storing it inside jacobs vector.
 	std::vector<unsigned int> jacobs = jacobsthal(N / 2);
-		
+	
 	// Print the unordered numbers.
 	std::cout << "Before : ";
 	for (auto pair : groupsVec)
@@ -148,17 +148,19 @@ void PmergeMe::run()
 		std::cout << " " << leftover;
 	std::cout << std::endl;
 	
-	// Sorting the groups and inserting the pend chain in the main for the vector containers
-	auto startVec = std::chrono::steady_clock::now();
+	// Sorting the groups and insert the pendChain in the mainChain (vector containers for main and pend)
+	auto startVec = std::chrono::high_resolution_clock::now();
 	orderGroup(mainVec, pendVec, groupsVec);
 	insertJacobSequence(mainVec, pendVec, jacobs, usedVec);
-	auto endVec = std::chrono::steady_clock::now();
+	auto endVec = std::chrono::high_resolution_clock::now();
+	std::chrono::duration<double, std::micro> vectorSort = endVec - startVec;
 	
-	// Sorting the groups and inserting the pend chain in the main for the deque containers
-	auto startDeq = std::chrono::steady_clock::now();
+	// Sorting the groups and insert the pendChain in the mainChain (deque containers for main and pend)
+	auto startDeq = std::chrono::high_resolution_clock::now();
 	orderGroup(mainDeq, pendDeq, groupsDeq);
 	insertJacobSequence(mainDeq, pendDeq, jacobs, usedDeq);
-	auto endDeq = std::chrono::steady_clock::now();
+	auto endDeq = std::chrono::high_resolution_clock::now();
+	std::chrono::duration<double, std::micro> dequeSort = endDeq - startDeq;
 	
 	// Printing the sorted main chain:
     std::cout << "After  :   ";
@@ -166,9 +168,9 @@ void PmergeMe::run()
         std::cout << num << " ";
     std::cout << std::endl;
 	
-	// Printing the time for sorting the main/pend chains as container type vector and the time for container type deque
-	std::cout << "Time to process a range of " << N << " elements with std::vector<int> : " << std::chrono::duration_cast<std::chrono::microseconds>(endVec - startVec).count() << " us\n";
-	std::cout << "Time to process a range of " << N << " elements with std:: deque<int> : " << std::chrono::duration_cast<std::chrono::microseconds>(endDeq - startDeq).count() << " us\n";
+	// Printing the time for sorting the numbers as container type vector and deque
+	std::cout << "Time to process a range of " << N << " elements with std::vector<int> : " << vectorSort.count() << " µs\n";
+	std::cout << "Time to process a range of " << N << " elements with std:: deque<int> : " << dequeSort.count() << " µs\n";
 }
 
 const char *PmergeMe::Error::what() const throw()
