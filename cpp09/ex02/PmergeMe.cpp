@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 18:00:44 by tkeil             #+#    #+#             */
-/*   Updated: 2025/05/06 19:32:19 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/05/07 16:03:51 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ PmergeMe::PmergeMe(int argc, char **arg) : N(0), leftover(-1)
 			if (i < argc - 2)
 			{
 				int second = extractNum(arg[i + 1]);
-                groups.push_back(std::make_pair(first, second));
+                groupsVec.push_back(std::make_pair(first, second));
 			}
 			else
 				leftover = first;
@@ -46,18 +46,22 @@ PmergeMe::PmergeMe(int argc, char **arg) : N(0), leftover(-1)
 			if (++it != end)
 			{
 				int second = extractNum(*it);
-				groups.push_back(std::make_pair(first, second));
+				groupsVec.push_back(std::make_pair(first, second));
 				++it;
 			}
 			else
 				leftover = first;
         }
     }
-	N = groups.size() * 2 + (leftover != -1 ? 1 : 0);
-    run();
+	groupsDeq = groupsVec;
+	N = groupsVec.size() * 2 + (leftover != -1 ? 1 : 0);
+	if (N > 1)
+    	run();
+	else
+		std::cout << "Only one number already sorted.\n";
 }
 
-PmergeMe::PmergeMe(const PmergeMe &other) : N(0), leftover(other.leftover), groups(other.groups), main(other.main), pend(other.pend)
+PmergeMe::PmergeMe(const PmergeMe &other) : N(0), leftover(other.leftover), groupsVec(other.groupsVec), groupsDeq(other.groupsDeq), mainVec(other.mainVec), pendVec(other.pendVec), mainDeq(other.mainDeq), pendDeq(other.pendDeq)
 {
 }
 
@@ -66,9 +70,12 @@ PmergeMe &PmergeMe::operator=(const PmergeMe &other)
     if (this == &other)
         return *this;
 	N = other.N;
-    main = other.main;
-    pend = other.pend;
-	groups = other.groups;
+    mainVec = other.mainVec;
+    pendVec = other.pendVec;
+	mainDeq = other.mainDeq;
+    pendDeq = other.pendDeq;
+	groupsVec = other.groupsVec;
+	groupsDeq = other.groupsDeq;
 	leftover = other.leftover;
     return *this;
 }
@@ -77,24 +84,45 @@ PmergeMe::~PmergeMe()
 {
 }
 
-// Calculates the jacob number based on n
-unsigned int PmergeMe::jacobsthal(unsigned int n)
+std::vector<unsigned int> PmergeMe::jacobsthal(const size_t size)
 {
-	if (n == 0)
-		return (0);
-	if (n == 1)
-		return (1);
-	int prev1 = 1, prev2 = 0, current = 0;
-	for (size_t i = 2; i <= n; i++)
+	std::vector<unsigned int> jacobs;
+	size_t prev1 = 1, prev2 = 0, current = 0;
+	
+	if (size == 0)
+		return jacobs;
+
+	jacobs.push_back(0);
+	if (size == 1)
+		return jacobs;
+	
+	jacobs.push_back(1);
+	
+	while (true)
 	{
 		current = prev1 + 2 * prev2;
+		if (current >= size)
+			break;
+		jacobs.push_back(current);
 		prev2 = prev1;
 		prev1 = current;
 	}
-	return (current);
+	
+	// If the last jacobs index was smaller than the last index of the pend chain, then push that last index to the jacobs numbers.
+	if (jacobs.back() < size - 1)
+		jacobs.push_back(size - 1);
+
+	std::cout << "jacobs sequence direct:";
+	for (auto &i : jacobs)
+	{
+		std::cout << " " << i;
+	}
+	std::cout << std::endl;
+
+	return (jacobs);
 }
 
-int unsigned PmergeMe::extractNum(std::string const &str)
+unsigned int PmergeMe::extractNum(std::string const &str)
 {
     size_t pos;
 
@@ -110,91 +138,44 @@ int unsigned PmergeMe::extractNum(std::string const &str)
     throw Error();
 }
 
-void PmergeMe::orderGroup()
-{
-	// Sort: In each pair inside the vector of pairs, the smaller number will be the first and the larger the second.
-	for (auto &pair : groups)
-	{
-		if (pair.first > pair.second)
-			std::swap(pair.first, pair.second);
-	}
-
-	// Sort: Now the pairs itself will be sorted in ascending order, according to the second number in each pair.
-    std::sort(groups.begin(), groups.end(), [](const std::pair<int, int>& a, const std::pair<int, int> &b) {
-        return (a.second < b.second);
-    });
-	
-	// Now the larger numbers will be pushed in the main chain and the smaller in the pend chain.
-	for (auto &pair : groups)
-	{
-		main.push_back(pair.second);
-		pend.push_back(pair.first);
-	}
-
-	// The first number from the pend chain is smaller than every number in the main chain. So it can directly be pushed to the main chain.begin().
-	main.insert(main.begin(), pend.front());
-	pend.pop_front();
-}
-
 void PmergeMe::run()
 {
-	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+	// The used vector saves the state of an pend chain index (was it already pushed to the main or not).
+	std::vector<bool> usedVec(N / 2, false);
+	std::vector<bool> usedDeq(N / 2, false);
+	
+	// Calculating the jacobs sequence and storing it inside jacobs vector.
+	std::vector<unsigned int> jacobs = jacobsthal(N / 2);
+		
 	// Print the unordered numbers.
-	std::cout << "Before: ";
-	for (auto pair : groups)
+	std::cout << "Before : ";
+	for (auto pair : groupsVec)
 		std::cout << " " << pair.first << " " << pair.second;
 	if (leftover != -1)
 		std::cout << " " << leftover;
 	std::cout << std::endl;
 	
-	orderGroup();
+	// Sorting the groups and inserting the pend chain in the main for the vector containers
+	auto startVec = std::chrono::steady_clock::now();
+	orderGroup(mainVec, pendVec, groupsVec);
+	insertJacobSequence(mainVec, pendVec, jacobs, usedVec);
+	auto endVec = std::chrono::steady_clock::now();
 	
-	// Calculating the jacobs sequence and storing it inside jacobs vector.
-	// The used vector saves the state of an pend chain index (was it already pushed to the main or not).
-	std::vector<unsigned int> jacobs;
-	std::vector<bool> used(pend.size(), false);
-	for (size_t i = 0; i < pend.size(); i++)
-	{
-		unsigned int j = jacobsthal(i);
-		if (j >= pend.size())
-		{
-			jacobs.push_back(pend.size() - 1);
-			break ;
-		}
-		jacobs.push_back(j);
-	}
+	// Sorting the groups and inserting the pend chain in the main for the deque containers
+	auto startDeq = std::chrono::steady_clock::now();
+	orderGroup(mainDeq, pendDeq, groupsDeq);
+	insertJacobSequence(mainDeq, pendDeq, jacobs, usedDeq);
+	auto endDeq = std::chrono::steady_clock::now();
 	
-	// If the last jacobs index was smaller than the last index of the pend chain, then push that last index to the jacobs numbers.
-	if (jacobs[jacobs.size() - 1] < pend.size() - 1)
-		jacobs.push_back(pend.size() - 1);
-
-	// The numbers from the pend chain will be inserted in the main in the jacobsthal sequence and all indexes before, if they weren"t pushed to main yet.
-	for (int idx : jacobs)
-	{
-		while (idx >= 0 && !used[idx])
-		{
-			int val = pend[idx];
-			auto it = std::lower_bound(main.begin(), main.end(), val);
-			main.insert(it, val);
-			used[idx] = true;
-			idx--;
-		}
-	}
-	
-	// If there was an odd number of input numbers, the leftover will be inserted at the end in the main chain
-	if (leftover != -1)
-	{
-		auto it = std::lower_bound(main.begin(), main.end(), leftover);
-		main.insert(it, leftover);
-	}
-	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 	// Printing the sorted main chain:
-    std::cout << "After:   ";
-    for (int num : main)
+    std::cout << "After  :   ";
+    for (int num : mainVec)
         std::cout << num << " ";
     std::cout << std::endl;
-	std::cout << "Time to process a range of " << N << " elements with std::[...] : " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << " us\n";
-	std::cout << "Time to process a range of " << N << " elements with std::[...] : " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << " us\n";
+	
+	// Printing the time for sorting the main/pend chains as container type vector and the time for container type deque
+	std::cout << "Time to process a range of " << N << " elements with std::vector<int> : " << std::chrono::duration_cast<std::chrono::microseconds>(endVec - startVec).count() << " us\n";
+	std::cout << "Time to process a range of " << N << " elements with std:: deque<int> : " << std::chrono::duration_cast<std::chrono::microseconds>(endDeq - startDeq).count() << " us\n";
 }
 
 const char *PmergeMe::Error::what() const throw()

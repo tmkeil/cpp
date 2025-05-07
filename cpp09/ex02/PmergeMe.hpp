@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 18:01:02 by tkeil             #+#    #+#             */
-/*   Updated: 2025/05/06 19:26:26 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/05/07 15:43:53 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,23 @@ private:
 	
 	int N;
 	int	leftover;
-	std::vector<std::pair<int, int>> groups;
-    std::vector<int> main;
-    std::deque<int> pend;
+	
+	std::vector<std::pair<int, int>> groupsVec;
+	std::vector<std::pair<int, int>> groupsDeq;
+	
+    std::vector<int> mainVec;
+	std::vector<int> pendVec;
+	std::deque<int> mainDeq;
+    std::deque<int> pendDeq;
 
-	static unsigned int jacobsthal(unsigned int n);
+	template <typename T>
+	void orderGroup(T &mainChain, T &pendChain, std::vector<std::pair<int, int>> &pairs);
+
+	template <typename T>
+	void insertJacobSequence(T &mainChain, T &pendChain, const std::vector<unsigned int> &jacobs, std::vector<bool> &used);
+	
 	static unsigned int extractNum(std::string const &str);
+	static std::vector<unsigned int> jacobsthal(const size_t size);
 
 public:
     PmergeMe(int argc, char **arg);
@@ -43,8 +54,7 @@ public:
     PmergeMe &operator=(const PmergeMe &other);
     ~PmergeMe();
 
-    void run();
-	void orderGroup();
+    void run();	
     
     class Error : public std::exception
     {
@@ -52,5 +62,7 @@ public:
         const char *what() const throw();
     };
 };
+
+#include "PmergeMe.tpp"
 
 #endif
