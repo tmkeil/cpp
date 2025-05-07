@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 18:00:44 by tkeil             #+#    #+#             */
-/*   Updated: 2025/05/07 16:03:51 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/05/07 16:12:08 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,13 +111,6 @@ std::vector<unsigned int> PmergeMe::jacobsthal(const size_t size)
 	// If the last jacobs index was smaller than the last index of the pend chain, then push that last index to the jacobs numbers.
 	if (jacobs.back() < size - 1)
 		jacobs.push_back(size - 1);
-
-	std::cout << "jacobs sequence direct:";
-	for (auto &i : jacobs)
-	{
-		std::cout << " " << i;
-	}
-	std::cout << std::endl;
 
 	return (jacobs);
 }
