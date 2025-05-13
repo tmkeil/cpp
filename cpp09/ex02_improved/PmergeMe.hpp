@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 18:01:02 by tkeil             #+#    #+#             */
-/*   Updated: 2025/05/13 16:48:30 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/05/13 20:43:07 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ class PmergeMe
 private:
     PmergeMe();
 	
-	int N;
+	size_t N;
 	int	leftover;
 	
 	// vector
@@ -53,9 +53,12 @@ private:
 	template <typename T>
 	void getJacobsSequence(T &jacobsContainer);
 	
-	template <typename T>
-	void insertJacobSequence(T &mainChain, T &jacobsSequence);
+	template <typename T, typename Pairs>
+	void insertJacobSequence(T &mainChain, T &jacobsSequence, Pairs &pairs);
 	
+	template <typename Iterator>
+	Iterator bin_search(Iterator start, Iterator end, const int val);
+
 	unsigned int extractNum(std::string const &str);
 	void printSorted();
 	void printUnsorted(int argc, char **argv);
