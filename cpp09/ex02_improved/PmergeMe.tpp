@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 16:45:21 by tkeil             #+#    #+#             */
-/*   Updated: 2025/05/13 20:54:02 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/05/13 21:18:46 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,18 @@
 template <typename T>
 void PmergeMe::getPairs(T &pairsContainer, int argc, char **argv)
 {
-	for (int i = 0; i < argc - 1; i++)
-		pairsContainer.push_back(std::make_pair(extractNum(argv[i]), extractNum(argv[i + 1])));
+	for (int i = 0; i < argc - 1; i += 2)
+	{
+		unsigned int a = extractNum(argv[i]);
+		unsigned int b = extractNum(argv[i + 1]);
+		pairsContainer.push_back(std::make_pair(std::max(a, b), std::min(a, b)));
+	}
+	std::cout << "pairs container: ";
+	for (auto i : pairsContainer)
+	{
+		std::cout << " {" << i.first << " " << i.second << "}";
+	}
+	std::cout << std::endl;
 }
 
 template <typename T>
@@ -31,11 +41,9 @@ T PmergeMe::merge(T &a, T &b)
 	while (i < a.size() && j < b.size())
 	{
 		if (a[i] > b[j])
-			c.push_back(b[j]);
+			c.push_back(b[j++]);
 		else
-			c.push_back(a[i]);
-		i++;
-		j++;
+			c.push_back(a[i++]);
 	}
 	while (i < a.size())
 		c.push_back(a[i++]);
@@ -62,7 +70,7 @@ void PmergeMe::getJacobsSequence(T &jacobsContainer)
 {
 	size_t prev1 = 1, prev2 = 0, current = 0;
 	
-	if (N / 2 < 2)
+	if (N / 2 == 0)
 		return ;
 	jacobsContainer.push_back(0);
 	while (true)
@@ -75,7 +83,6 @@ void PmergeMe::getJacobsSequence(T &jacobsContainer)
 		prev1 = current;
 	}
 }
-
 
 template <typename Iterator>
 Iterator PmergeMe::bin_search(Iterator start, Iterator end, const int val)
@@ -96,6 +103,11 @@ Iterator PmergeMe::bin_search(Iterator start, Iterator end, const int val)
 template <typename T, typename Pairs>
 void PmergeMe::insertJacobSequence(T &mainChain, T &jacobsSequence, Pairs &pairs)
 {
+	std::cout << "jacobs numbers: ";
+	for (auto idx : jacobsSequence)
+		std::cout << idx << " ";
+	std::cout << std::endl;
+
 	for (auto pair : pairs)
 		mainChain.push_back(pair.first);
 

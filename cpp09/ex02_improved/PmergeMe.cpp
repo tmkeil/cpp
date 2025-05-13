@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 18:00:44 by tkeil             #+#    #+#             */
-/*   Updated: 2025/05/13 20:52:17 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/05/13 21:10:29 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,16 @@ PmergeMe::PmergeMe(int argc, char **arg) : N(argc), leftover(-1)
 {
 	if (argc % 2 == 1)
 		leftover = extractNum(arg[argc - 1]);
-
+		
+	std::cout << "leftover: " << leftover << std::endl;
 	auto startVec = std::chrono::high_resolution_clock::now();
-	getPairs(groupsVec, argc, arg);
+	getPairs(groupsVec, argc, arg);	
 	mergeSortPairs(groupsVec);
+	for (auto &i : groupsVec)
+	{
+		std::cout << " {" << i.first << " " << i.second << "}";
+	}
+	std::cout << std::endl;
 	getJacobsSequence(jacobsVec);
 	insertJacobSequence(mainChainVec, jacobsVec, groupsVec);
 	auto endVec = std::chrono::high_resolution_clock::now();
