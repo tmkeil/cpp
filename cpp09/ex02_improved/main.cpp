@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 17:19:26 by tkeil             #+#    #+#             */
-/*   Updated: 2025/05/06 17:05:17 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/05/13 15:01:01 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int main(int argc, char **argv)
     }
     try
     {
-        PmergeMe pmerge(argc, argv + 1);
+        PmergeMe pmerge(argc - 1, argv + 1);
     }
     catch(const std::exception& e)
     {

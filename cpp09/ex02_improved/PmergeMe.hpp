@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 18:01:02 by tkeil             #+#    #+#             */
-/*   Updated: 2025/05/12 19:44:53 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/05/13 16:48:30 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,35 +32,40 @@ private:
 	int	leftover;
 	
 	// vector
-	std::
 	std::vector<int> jacobsVec;
 	std::vector<std::pair<int, int>> groupsVec;
+	std::vector<int> mainChainVec;
 
 	// deque
 	std::deque<int> jacobsDeq;
 	std::deque<std::pair<int, int>> groupsDeq;
-	
-    std::vector<int> mainVec;
-	std::vector<int> pendVec;
-	std::deque<int> mainDeq;
-    std::deque<int> pendDeq;
+	std::deque<int> mainChainDeq;
 
 	template <typename T>
-	void orderGroup(T &mainChain, T &pendChain, std::vector<std::pair<int, int>> &pairs);
+	void getPairs(T &pairsContainer, int argc, char **argv);
 
 	template <typename T>
-	void insertJacobSequence(T &mainChain, T &pendChain, const std::vector<unsigned int> &jacobs, std::vector<bool> &used);
+	T merge(T &a, T &b);
 	
-	static unsigned int extractNum(std::string const &str);
-	static std::vector<unsigned int> jacobsthal(const size_t size);
+	template <typename T>
+	void mergeSortPairs(T &pairs);
+
+	template <typename T>
+	void getJacobsSequence(T &jacobsContainer);
+	
+	template <typename T>
+	void insertJacobSequence(T &mainChain, T &jacobsSequence);
+	
+	unsigned int extractNum(std::string const &str);
+	void printSorted();
+	void printUnsorted(int argc, char **argv);
+	void printTime(std::chrono::duration<double, std::micro> vectorSort, std::chrono::duration<double, std::micro> dequeSort);
 
 public:
     PmergeMe(int argc, char **arg);
     PmergeMe(const PmergeMe &other);
     PmergeMe &operator=(const PmergeMe &other);
     ~PmergeMe();
-
-    void run();	
     
     class Error : public std::exception
     {
