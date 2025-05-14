@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 16:45:21 by tkeil             #+#    #+#             */
-/*   Updated: 2025/05/13 21:18:46 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/05/14 18:34:38 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include "PmergeMe.hpp"
 
+// Here the input is parsed and the pairs are created.
 template <typename T>
 void PmergeMe::getPairs(T &pairsContainer, int argc, char **argv)
 {
@@ -32,6 +33,7 @@ void PmergeMe::getPairs(T &pairsContainer, int argc, char **argv)
 	std::cout << std::endl;
 }
 
+// Here the merge is performed on two neighboring pairs.
 template <typename T>
 T PmergeMe::merge(T &a, T &b)
 {
@@ -52,6 +54,7 @@ T PmergeMe::merge(T &a, T &b)
 	return (c);
 }
 
+// Here the merge sort is performed on the pairs.
 template <typename T>
 void PmergeMe::mergeSortPairs(T &pairs)
 {
@@ -65,6 +68,7 @@ void PmergeMe::mergeSortPairs(T &pairs)
 	pairs = merge(one, two);
 }
 
+// Here a container (either deque or vector) of a jacobs sequence is created.
 template <typename T>
 void PmergeMe::getJacobsSequence(T &jacobsContainer)
 {
@@ -84,6 +88,8 @@ void PmergeMe::getJacobsSequence(T &jacobsContainer)
 	}
 }
 
+// Here the binary search is used to find the position where the number should be inserted.
+// The range is [start, end). end = current index of pend chain + added numbers.
 template <typename Iterator>
 Iterator PmergeMe::bin_search(Iterator start, Iterator end, const int val)
 {
@@ -100,14 +106,11 @@ Iterator PmergeMe::bin_search(Iterator start, Iterator end, const int val)
 	return (low);
 }
 
+// Here the numbers from the pend chain are inserted into the main chain using the
+// jacobs sequence and binary search with a calculated upper bound.
 template <typename T, typename Pairs>
 void PmergeMe::insertJacobSequence(T &mainChain, T &jacobsSequence, Pairs &pairs)
 {
-	std::cout << "jacobs numbers: ";
-	for (auto idx : jacobsSequence)
-		std::cout << idx << " ";
-	std::cout << std::endl;
-
 	for (auto pair : pairs)
 		mainChain.push_back(pair.first);
 

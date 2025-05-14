@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 18:00:44 by tkeil             #+#    #+#             */
-/*   Updated: 2025/05/13 21:10:29 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/05/14 18:27:44 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,9 @@ PmergeMe::PmergeMe(int argc, char **arg) : N(argc), leftover(-1)
 	if (argc % 2 == 1)
 		leftover = extractNum(arg[argc - 1]);
 		
-	std::cout << "leftover: " << leftover << std::endl;
 	auto startVec = std::chrono::high_resolution_clock::now();
 	getPairs(groupsVec, argc, arg);	
 	mergeSortPairs(groupsVec);
-	for (auto &i : groupsVec)
-	{
-		std::cout << " {" << i.first << " " << i.second << "}";
-	}
-	std::cout << std::endl;
 	getJacobsSequence(jacobsVec);
 	insertJacobSequence(mainChainVec, jacobsVec, groupsVec);
 	auto endVec = std::chrono::high_resolution_clock::now();
@@ -55,7 +49,8 @@ PmergeMe &PmergeMe::operator=(const PmergeMe &other)
 {
     if (this == &other)
         return *this;
-	N = other.N;
+    
+    N = other.N;
 	
 	jacobsDeq = other.jacobsDeq;
 	groupsDeq = other.groupsDeq;
@@ -143,7 +138,7 @@ and the pend chain like this (smaller numbers from each pair):
 */
 
 /*
-Then the numbers from the pend chain are inserted in the main chain, using the jacobs sequence (0, 1, 3, 5, 11, 21, 43, 85, 171, 341, ...)
+Then the numbers from the pend chain are inserted into the main chain, using the jacobs sequence (0, 1, 3, 5, 11, 21, 43, 85, 171, 341, ...)
 The final insertions order is a combination of the jacobs sequence numbers and the indexes before them, that are not used yet.
 So the insertion order of indexes is:
 0,      // start
@@ -164,5 +159,16 @@ So the insertion order of indexes is:
 That means the numbers from the pend chain are inserted in that order:
 2 (0), 20 (1), 3 (3), 77 (2), 5 (5), 16 (4), 13 (9), 29 (8), 46 (7), 11 (6)
 
-The leftover will be inserted at the end in the main chain
+When inserting the numbers from the pend chain, a binary search is used to find the correct position in the main chain.
+To limit the search efficiently, the upper bound of the binary search will be limited,
+so the search will not go through the whole main chain each time.
+The upper bound is calculated based on the number of pend chain numbers, that were already inserted
+and the current jacobs index. The formula is:
+upper_bound = jacobs_index + numbers_added
+
+Why "upper_bound = jacobs_index + numbers_added"?
+Because each pend element is always smaller than its pair partner, that is already placed in the main.
+Therefore, it can only be inserted up to a certain point in the main chain.
+
+At the end, the leftover will be inserted into the main chain.
 */
