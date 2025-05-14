@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 18:49:37 by tkeil             #+#    #+#             */
-/*   Updated: 2025/05/04 19:27:37 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/05/14 18:54:52 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ void BitcoinExchange::read_data()
     float val;
     std::ifstream data;
     std::string line, date, rate;
+    size_t number_of_rates = 0;
     
     openFile(data, _data);
     std::getline(data, line);
@@ -115,12 +116,19 @@ void BitcoinExchange::read_data()
             data.close();
             throw Invalid_Date();
         }
-        if (rate.empty() || !rate.size() || !extractNumber(rate, val))
+        else if (rate.empty() || !rate.size() || !extractNumber(rate, val))
         {
             data.close();
             throw Invalid_Rate();
         }
+        else
+            number_of_rates++;
         _data_map[date] = val;
+    }
+    if (!number_of_rates)
+    {
+        data.close();
+        throw No_Rates();
     }
     data.close();
 }
@@ -182,7 +190,10 @@ void BitcoinExchange::printValues()
             continue;
         }
         float rate = getRate(date);
-        std::cout << date << " => " << val << " = " << rate * val << std::endl;
+        if (val != 0 && rate > std::numeric_limits<float>::max() / val)
+            std::cerr << "rate * val causes overflow\n";
+        else
+            std::cout << date << " => " << val << " = " << rate * val << std::endl;
     }
     input.close();
 }
@@ -206,4 +217,9 @@ const char *BitcoinExchange::Invalid_Rate::what() const throw()
 const char *BitcoinExchange::Invalid_Date::what() const throw()
 {
     return ("Error: Invalid date format in btc_data!");
+}
+
+const char *BitcoinExchange::No_Rates::what() const throw()
+{
+    return ("Error: No available rates inside data.csv!");
 }

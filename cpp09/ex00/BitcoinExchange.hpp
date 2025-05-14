@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 18:50:53 by tkeil             #+#    #+#             */
-/*   Updated: 2025/05/04 19:06:32 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/05/14 18:46:27 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,11 @@ public:
         const char *what() const throw();
     };
     class Invalid_Rate : public std::exception
+    {
+    public:
+        const char *what() const throw();
+    };
+    class No_Rates : public std::exception
     {
     public:
         const char *what() const throw();
