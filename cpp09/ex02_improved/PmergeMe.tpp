@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 16:45:21 by tkeil             #+#    #+#             */
-/*   Updated: 2025/05/14 18:34:38 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/05/14 18:37:25 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,6 @@ void PmergeMe::getPairs(T &pairsContainer, int argc, char **argv)
 		unsigned int b = extractNum(argv[i + 1]);
 		pairsContainer.push_back(std::make_pair(std::max(a, b), std::min(a, b)));
 	}
-	std::cout << "pairs container: ";
-	for (auto i : pairsContainer)
-	{
-		std::cout << " {" << i.first << " " << i.second << "}";
-	}
-	std::cout << std::endl;
 }
 
 // Here the merge is performed on two neighboring pairs.
