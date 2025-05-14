@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   RPN.cpp                                           :+:      :+:    :+:   */
+/*   RPN.cpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 21:02:35 by tkeil             #+#    #+#             */
-/*   Updated: 2025/05/02 18:12:51 by tkeil            ###   ########.fr       */
+/*   Created: 2025/05/14 19:22:03 by tkeil             #+#    #+#             */
+/*   Updated: 2025/05/14 19:22:17 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,23 +55,45 @@ int RPN::extractNum(std::string const &str)
 
 int RPN::add(const int &a, const int &b)
 {
+    if ((b > 0 && a > std::numeric_limits<int>::max() - b) ||
+        (b < 0 && a < std::numeric_limits<int>::min() - b))
+        throw Overflow();
     return (a + b);
 }
 
 int RPN::substract(const int &a, const int &b)
 {
+    if ((b < 0 && a > std::numeric_limits<int>::max() + b) ||
+        (b > 0 && a < std::numeric_limits<int>::min() + b))
+        throw Overflow();
     return (a - b);
 }
 
 int RPN::multiply(const int &a, const int &b)
 {
+    if (a > 0)
+    {
+        if (b > 0 && a > std::numeric_limits<int>::max() / b)
+            throw Overflow();
+        if (b < 0 && b < std::numeric_limits<int>::min() / a)
+            throw Overflow();
+    }
+    else if (a < 0)
+    {
+        if (b > 0 && a < std::numeric_limits<int>::min() / b)
+            throw Overflow();
+        if (b < 0 && a < std::numeric_limits<int>::max() / b)
+            throw Overflow();
+    }
     return (a * b);
 }
 
 int RPN::divide(const int &a, const int &b)
 {
     if (b == 0)
-        throw Error();
+        throw Division();
+    if (a == std::numeric_limits<int>::min() && b == -1)
+        throw Overflow();
     return (a / b);
 }
 
@@ -123,5 +145,15 @@ void RPN::run(const char *arg)
 
 const char *RPN::Error::what() const throw()
 {
-    return ("Error");
+    return ("Error: Invalid input");
+}
+
+const char *RPN::Overflow::what() const throw()
+{
+    return ("Error: Overflow");
+}
+
+const char *RPN::Division::what() const throw()
+{
+    return ("Error: Division by zero");
 }
